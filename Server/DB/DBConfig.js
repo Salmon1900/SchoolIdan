@@ -1,7 +1,7 @@
 module.exports.dbConfig = dbConfig = {
-    user: "postgres",
-    password: "admin",
-    host: "127.0.0.1",
-    port: "5432",
-    database: "School"
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME
 }

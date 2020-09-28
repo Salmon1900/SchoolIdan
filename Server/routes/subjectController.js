@@ -1,14 +1,14 @@
-const service = require('../services/subjectService');
+const subjectService = require('../services/subjectService');
 
 module.exports = (app) => {
     app.get('/subjects/all', (req, res) => {
-        service.getAllSubjects().then(data => {
+        subjectService.getAllSubjects().then(data => {
             res.send(data);
         })
     })
 
     app.get('/subjects/:id', (req, res) => {
-        service.getSubjectById(req.params.id).then(data => {
+        subjectService.getSubjectById(req.params.id).then(data => {
             res.send(data);
         })
     })

@@ -1,0 +1,7 @@
+[] - figure out how to use cookies/auth to protect paths
+[] - figure out error hadling and implement in: 
+    [] - user login
+    [] - user sign up
+    (more soon)
+[] - organize routes better using express router
+[] - (?) Change way login works(auth.js file ?)

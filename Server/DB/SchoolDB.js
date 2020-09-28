@@ -12,7 +12,8 @@ const querySchoolDB = async (query, params=[]) => {
         return res.rows;
     })
     .catch(err => {
-        console.log("Error executing query\nQuery: ", Query)
+        console.log("Error executing query\nQuery: ", query)
+        console.log("Details: ", err)
     })
 
     return result;

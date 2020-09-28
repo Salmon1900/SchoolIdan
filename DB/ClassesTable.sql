@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS public.t_classes;
+DROP TABLE IF EXISTS public.t_classes CASCADE;
 
 CREATE TABLE public.t_classes
 (
