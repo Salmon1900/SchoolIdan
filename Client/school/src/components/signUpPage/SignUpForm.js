@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     Avatar, Button, CssBaseline, TextField, Link, Grid, Typography,
-    makeStyles, Container, Select, MenuItem, InputLabel, FormControl
+    makeStyles, Container, Select, MenuItem, InputLabel, FormControl, Input, OutlinedInput
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import 'date-fns'
@@ -40,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
         // margin: theme.spacing(1),
         minWidth: 120,
     },
+    fileInputLabel: {
+        border: "1px solid #c4c4c4",
+        borderRadius: "5px",
+        padding: "21px"
+    }
 }));
 
 const dateStyles = makeStyles({
@@ -53,7 +58,7 @@ let jobList = [];
 
 
 
-const SignUpForm = () => {
+const SignUpForm = ({isManagment=false}) => {
     const classes = useStyles();
     const dateClasses = dateStyles();
     const { register, handleSubmit, errors, getValues, reset } = useForm()
@@ -68,7 +73,7 @@ const SignUpForm = () => {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [dateOfBirth, setdateOfBirth] = useState(null);
-    const [formErrors, setFormErrors] = useState({});
+    const [profilePicture, setProfilePic] = useState({})
     let history = useHistory()
 
     useEffect(() => {
@@ -91,7 +96,8 @@ const SignUpForm = () => {
             lastName: data.lastName,
             dateOfBirth: data.dateOfBirth,
             jobId: jobId,
-            password: data.password
+            password: data.password,
+            picture: profilePicture[0]
         }
 
         addNewEmployee(newEmp).then(res => {
@@ -123,9 +129,9 @@ const SignUpForm = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    הרשמה
+                    יצירת חשבון עובד
         </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmit(e => handleSignUp(e))}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit(e => handleSignUp(e))} encType="multipart/form-data">
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -209,6 +215,17 @@ const SignUpForm = () => {
                             />
                         </Grid>
                         <Grid item xs={12}>
+                            <InputLabel className={classes.fileInputLabel}>{Object.keys(profilePicture).length ? profilePicture[0]["name"] : "לחץ להוספת תמונת עובד"}
+                            <OutlinedInput 
+                                type="file" 
+                                name="profilePic" 
+                                lang="heb" 
+                                style={{display: "none"}} 
+                                // value={profilePicture}
+                                onChange={(e) => setProfilePic(e.currentTarget.files)}/>
+                            </InputLabel>
+                        </Grid>
+                        <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
@@ -253,9 +270,9 @@ const SignUpForm = () => {
           </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="/" variant="body2">
+                            {isManagment ? false : <Link href="/" variant="body2">
                                 יש לך חשבון? היכנס
-              </Link>
+                            </Link>}
                         </Grid>
                     </Grid>
                 </form>

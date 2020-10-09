@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS public.t_employees;
+DROP TABLE IF EXISTS public.t_employees CASCADE;
 
 CREATE TABLE public.t_employees
 (
@@ -8,6 +8,8 @@ CREATE TABLE public.t_employees
     date_of_birth date,
     is_fired boolean NOT NULL DEFAULT 'false',
 	job_id integer NOT NULL, 
+	gender character varying(20),
+	picture bytea,
     PRIMARY KEY (emp_id),
 	FOREIGN KEY(job_id) REFERENCES public.t_jobs(job_id)
 );

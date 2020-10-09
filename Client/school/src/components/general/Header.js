@@ -2,32 +2,40 @@ import { Grid, makeStyles, IconButton } from '@material-ui/core';
 import React from 'react';
 import Logo from '../../res/placeholder.png'
 import { getAllSubjects } from '../../api/subjectApi'
-import { ExitToApp } from '@material-ui/icons';
+import { ExitToApp, Menu } from '@material-ui/icons';
+import { connect } from 'react-redux';
 // import { IconButton } from 'material-ui';
 
 const headerStyles = makeStyles(theme => ({
     header: {
         backgroundColor: theme.palette.primary.main,
-        height: "8vh",
-        padding: 15
+        height: "7vh",
+        padding: 5
     },
     logo: {
         height: "6vh",
     }
 }));
-const Header = ({ isLoggedIn, setLoginStatus }) => {
+const Header = ({ isLoggedIn, openNavDrawer }) => {
     const headerClasses = headerStyles();
     return (
         <header className={headerClasses.header}>
             <Grid container>
-                <Grid item xs={2}>
-                    {isLoggedIn ? <IconButton onClick={() => setLoginStatus(false)}>
-                        <ExitToApp fontSize="large" />
+                <Grid item xs={1}>
+                    {isLoggedIn ?
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="end"
+                        onClick={() => openNavDrawer(true)}
+                        // className={clsx(open && classes.hide)}
+                    >
+                        <Menu />
                     </IconButton> : false}
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={10}>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                     <img src={Logo} className={headerClasses.logo} />
                 </Grid>
             </Grid>
@@ -35,4 +43,10 @@ const Header = ({ isLoggedIn, setLoginStatus }) => {
     )
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.user.loggedIn
+    }
+}
+
+export default connect(mapStateToProps, null)(Header);

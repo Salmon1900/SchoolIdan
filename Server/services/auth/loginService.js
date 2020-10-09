@@ -14,7 +14,7 @@ const verifyUser = async (userId, password) => {
                 }).catch(err => {
                     console.log("Password verify error: ", err)
                 })
-                console.log("User verified!")
+                console.log(`User ${userId} verified!`)
                 
                 return res ? user : false;
             }

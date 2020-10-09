@@ -11,8 +11,7 @@ TRUNCATE TABLE t_subjects RESTART IDENTITY CASCADE;
 
 INSERT INTO t_jobs(job_title) VALUES
 	('מנהל'),
-	('מורה'),
-	('תחזוקה');
+	('מורה');
 	
 INSERT INTO t_subjects(subject_name) VALUES
 	('מתמטיקה'),
@@ -26,7 +25,7 @@ INSERT INTO t_subjects(subject_name) VALUES
 	
 INSERT INTO t_employees(emp_id, emp_name, password, job_id, date_of_birth) VALUES
 	-- Pass: "password"
-	('111333001', 'עובד test1', '$2b$06$zCrlv8N7N5Cu6ZF61W.bPO3ourWXLxDd9ZQhfJ2sWscQIqjulZYpm', 2, '2000-06-09'),
+	('111333001', 'עובד test1', '$2b$06$zCrlv8N7N5Cu6ZF61W.bPO3ourWXLxDd9ZQhfJ2sWscQIqjulZYpm', 1, '2000-06-09'),
 	('111333002', 'עובד test2', '$2b$06$zCrlv8N7N5Cu6ZF61W.bPO3ourWXLxDd9ZQhfJ2sWscQIqjulZYpm', 2, '1995-03-05'),
 	('111333003', 'עובד test3', '$2b$06$zCrlv8N7N5Cu6ZF61W.bPO3ourWXLxDd9ZQhfJ2sWscQIqjulZYpm', 2, '1999-01-01');
 

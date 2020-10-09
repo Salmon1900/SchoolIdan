@@ -8,6 +8,7 @@ CREATE TABLE public.t_classes
 	school_year character varying(4),
 	teacher_id character varying(9) NOT NULL,
 	subject_id integer NOT NULL,
+	isActive boolean DEFAULT true,
 	PRIMARY KEY(class_id),
 	FOREIGN KEY(teacher_id) REFERENCES public.t_employees(emp_id),
 	FOREIGN KEY(subject_id) REFERENCES public.t_subjects(subject_id)

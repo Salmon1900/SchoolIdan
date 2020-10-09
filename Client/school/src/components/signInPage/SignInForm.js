@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField, Avatar, Button, CssBaseline, Link, Grid, Typography,
          makeStyles, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { tryLogIn } from '../../api/loginApi'
 import { Redirect, useHistory } from 'react-router';
-
+import { connect } from 'react-redux';
+import { logInUser } from '../../actions/userActions'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignInForm = ({setLogged}) => {
+const SignInForm = ({setLoggedIn, isLoggedIn, role}) => {
     const classes = useStyles();
     let [idNumber, setIdNumber] = useState("");
     let [password, setPassword] = useState("");
@@ -42,17 +43,19 @@ const SignInForm = ({setLogged}) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         validateId(idNumber);
-
+        await setLoggedIn(idNumber, password)
         let result = await tryLogIn(idNumber, password);
-        console.log(result)
+        handleLoginAttempt(result)
 
+    }
+
+    const handleLoginAttempt = async (result) => {
         if(!result){
             // Clear fields
             setIdNumber("");
             setPassword("");
             alert("שם משתשמש או סיסמה לא נכונים")
-        } else if(result.valid){
-            await setLogged(true)
+        } else {
             history.push('/home')
         }
     }
@@ -66,7 +69,7 @@ const SignInForm = ({setLogged}) => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    התחברות
+                    התחבר
         </Typography>
                 <form className={classes.form} noValidate>
                     <TextField
@@ -119,4 +122,17 @@ const SignInForm = ({setLogged}) => {
     );
 }
 
-export default SignInForm;
+const mapDispatchToProps = () => dispatch => {
+    return{
+        setLoggedIn: (id, password) => dispatch(logInUser(id, password))
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        isLoggedIn: state.user.loggedIn,
+        role: state.useRole
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInForm);

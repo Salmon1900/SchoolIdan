@@ -1,8 +1,15 @@
+const { ensureAuthenticated } = require('../../auth/authentication');
 const loginService = require('../../services/auth/loginService');
+const {ROLES} = require('../../auth/roleCheck')
 
 module.exports = (app, passport) => {
     app.post('/login', passport.authenticate('local') ,(req, res) => {
-        res.json({valid: req.isAuthenticated()})
+        res.json({success: req.isAuthenticated(), role: req.user.job_id})
+    })
+
+    app.get('/logout', (req, res) => {
+        req.logout();
+        res.json({success: true})
     })
 }
 

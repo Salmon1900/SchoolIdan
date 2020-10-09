@@ -1,10 +1,11 @@
+import { Grid } from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import { getAllEmployees, getEmployeeQualifications } from "../../api/employeeApi";
-import EmployeeProfileCard from './EmployeeProfileCard';
+import EmployeeList from './EmployeeList';
+import BirthdayCard from  './BirthdayCard'
 
-const Home = ({isLoggedIn}) => {
+const Home = () => {
     const [employees, setEmployeeList] = useState([]);
-    const [empQualifications, setQualificationList] = useState([]);
 
     useEffect(() => {
           getAllEmployees().then(res => {
@@ -13,21 +14,10 @@ const Home = ({isLoggedIn}) => {
     }, [])
 
 
-    const renderEmployeeCards = (employeeList) => {
-        if(!employeeList){
-            return(<div>
-                אין
-            </div>)
-        }
-        return(
-            employeeList.map(emp => <EmployeeProfileCard key={emp.emp_id} employee={emp}/>)
-        )
-    }
-
     return(
-        <div>
-            {renderEmployeeCards(employees, empQualifications)}
-        </div>
+        <Grid>
+            <EmployeeList employees={employees}/>
+        </Grid>
     )
 }
 

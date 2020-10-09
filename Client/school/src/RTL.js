@@ -16,7 +16,7 @@ const RTL = (props) => {
             secondary: {
                 main: "#483D3F"
             },
-            background: "#F4EBD9"
+            // background: "#F4EBD9"
         }
     })
 

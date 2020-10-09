@@ -10,7 +10,7 @@ const passport = require('passport');
 const appProperties = require('./appProperties');
 const router = express.Router();
 const initializePassport = require('./auth/passportConfig');
-
+const multer = require('multer');
 const loginService = require('./services/auth/loginService');
 const empService = require('./services/employeeService')
 
@@ -43,16 +43,20 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(express.json());
-// app.use(cookieParser(process.env.COOKIE_SECRET))
+app.use(cookieParser(process.env.COOKIE_SECRET))
 app.use(bodyParser.json())
+// app.use(multer().single('profile'))
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: false,
+
 }));
 
 // Import all controllers
 require('./routes/subjectController')(app);
 require('./routes/jobContorller')(app);
 require('./routes/employeeController')(app);
+require('./routes/studentController')(app);
+require('./routes/classController')(app);
 require('./routes/auth/loginController')(app, passport);
 
 // loginService.verifyUser('111333001', 'password').then((res) => {

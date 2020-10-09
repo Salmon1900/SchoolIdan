@@ -41,13 +41,23 @@ const EmployeeProfileCard = ({employee, qualifications}) => {
         })
   }, [])
 
+
+  function hexToBase64(str) {
+    console.log(str);
+    return btoa()
+    // return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+}
+
+    employee.picture ? console.log(Profile) : console.log("A")
     return(
         <Card className={classes.root}>
-         <CardMedia
+         {!employee.picture ? <CardMedia
           className={classes.cover}
+          
           image={Profile}
           title="תמונת פרופיל"
-        />
+        /> :
+        <img src={`data:image/jpg;base64,${btoa(employee.picture.data)}`}/>}
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
@@ -58,7 +68,7 @@ const EmployeeProfileCard = ({employee, qualifications}) => {
             </Typography>
             <Typography variant="subtitle2" color="textSecondary">
               מוסמך ללמד:
-              {subjectsEmpCanTeach ? subjectsEmpCanTeach.map(q => q.subject_name).join(',') : "חסר הסמכה"}
+              {subjectsEmpCanTeach.length ? subjectsEmpCanTeach.map(q => q.subject_name).join(',') : "חסר הסמכה"}
             </Typography>
           </CardContent>
           <div className={classes.controls}>
