@@ -36,12 +36,12 @@ const ManagementPanel = ({title, data, reloadData, tableData, addItem, addButton
                 </Grid>
                 <Grid item xs={8} className={buttonPanelClasses.panel}>
                     <Grid container justify="space-around">
-                        <Grid item xs={2}>
+                        {addFormData ? <Grid item xs={2}>
                             <Button variant="contained" color="primary" className={buttonPanelClasses.button} onClick={() => setAddDialog(true)}>{addButtonLabel}</Button>
-                        </Grid>
-                        <Grid item xs={2}>
+                        </Grid> : false}
+                        {removeFormData ? <Grid item xs={2}>
                             <Button variant="contained" color="primary" className={buttonPanelClasses.button} onClick={() => setRemoveDialog(true)}>{removeButtonLabel}</Button>
-                        </Grid>
+                        </Grid> : false}
                     </Grid>
                 </Grid>
             </Grid>
