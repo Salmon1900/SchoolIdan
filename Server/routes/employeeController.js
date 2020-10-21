@@ -1,77 +1,113 @@
-const empService = require('../services/employeeService');
-const { ensureAuthenticated } = require('../auth/authentication')
-const { checkIfAdmin } = require('../auth/roleCheck')
+const empService = require("../services/employeeService");
+const { ensureAuthenticated } = require("../auth/authentication");
+const { checkIfAdmin } = require("../auth/roleCheck");
 // const { upload } = require('../utils/fileUploader');
-var multer  = require('multer')
-var upload = multer({ dest: process.env.FILE_PATH })
+var multer = require("multer");
+const { emp } = require("../utils/labels");
+var upload = multer({ dest: process.env.FILE_PATH });
 
 module.exports = (app) => {
-    app.get('/employees', ensureAuthenticated ,(req, res) => {
-        empService.getEmployeeList().then((data) => {
-            res.send(data);
+  app.get("/employees", ensureAuthenticated, (req, res) => {
+    empService.getEmployeeList().then((data) => {
+      res.send(data);
+    });
+  });
+
+  app.get("/employees/get/:id", ensureAuthenticated, (req, res) => {
+    empService.getEmployeeById(req.params.id).then((data) => {
+      res.send(data[0]);
+    });
+  });
+
+  app.post("/employees/new", multer().single("profile"), (req, res) => {
+    empService
+      .createNewEmployee(req.body, req.file.buffer)
+      .then((data) => {
+        res.status(201).json({ success: true, message: "נוסף בהצלחה" });
+      })
+      .catch((err) => {
+        res.status(400).json({ success: false, message: err.message });
+      });
+  });
+
+  app.get("/employees/qualif/:id", ensureAuthenticated, (req, res) => {
+    empService
+      .getEmpQualifications(req.params.id)
+      .then((data) => res.send(data));
+  });
+
+  app.get("/employees/classes/:id", ensureAuthenticated, (req, res) => {
+    empService.getEmployeeClasses(req.params.id).then((data) => res.send(data));
+  });
+
+  app.get(
+    "/employees/findTeacher/:subjectId",
+    ensureAuthenticated,
+    checkIfAdmin,
+    (req, res) => {
+      empService.getQualifiedForSubject(req.params.subjectId).then((data) => {
+        res.send(data);
+      });
+    }
+  );
+
+  app.get("/employees/teachers/hired", ensureAuthenticated, (req, res) => {
+    empService.getHiredTeachers().then((data) => res.send(data));
+  });
+
+  app.get("/employees/qualif/not/:id", ensureAuthenticated, (req, res) => {
+    empService.getNotQualifiedFor(req.params.id).then((data) => res.send(data));
+  });
+
+  app.post(
+    "/employees/qualif/add",
+    ensureAuthenticated,
+    checkIfAdmin,
+    (req, res) => {
+      empService
+        .addQualification(req.body.id, req.body.subjectId)
+        .then((data) => {
+          res
+            .status(201)
+            .json({ success: true, message: "ההסמכה נוספה בהצלחה" });
         })
-    })
-
-    app.get('/employees/:id', ensureAuthenticated, (req, res) => {
-        empService.getEmployeeById(req.params.id).then((data) => {
-            res.send(data);
-        })
-    })
-
-    // app.post("/upload", {
-    //     upload(req, res, {(err) => {
-    //         console.log("Request ---", req.body);
-    //         console.log("Request file ---", req.file);//Here you get file.
-    //         /*Now do where ever you want to do*/
-    //         if(!err){
-    //             return res.send(200).end();
-    //         }
-    //      })}
-    //  });
-
-    app.post('/employees/new2', upload.single('profile'), (req, res) => {
-        console.log(req.body);
-        console.log(req.file);
-        console.log(req.file.buffer);
-
-        console.log(req.headers)
-        empService.createNewEmployee(req.body, req.file).then(data => {
-            res.status(201).json({ success: true, message: "נוסף בהצלחה"});
-        }).catch(err => {
-            res.status(400).json({ success: false, message: err.message})
+        .catch((err) => {
+          res.status(400).json({ success: false, message: err.message });
         });
-    } )
+    }
+  );
 
-    // app.post('/employees/new2', (req, res) => {
-    //     upload(req, res,  (err) => {
-    //         console.log(req.body);
-    //         console.log(req.file);//Here you get file.
-    //         /*Now do where ever you want to do*/
-    //         if(!err) {
-    //             return res.send(200).end();
-    //         }
-    //     })
-    // })
-
-
-    app.post('/employees/new', (req, res) => {
-        empService.createNewEmployee(req.body).then(data => {
-            res.status(201).json({ success: true, message: "נוסף בהצלחה"});
-        }).catch(err => {
-            res.status(400).json({ success: false, message: err.message})
-        });
-    })
-
-    app.get('/employees/qualif/:id', ensureAuthenticated, (req, res) => {
-        empService.getEmpQualifications(req.params.id).then(data =>
-            res.send(data)
-        )
-    })
-
-    app.get('/employees/findTeacher/:subjectId', ensureAuthenticated, checkIfAdmin, (req, res)=> {
-        empService.getQualifiedForSubject(req.params.subjectId).then(data => {
-            res.send(data);
+  app.delete(
+    "/employees/qualif/remove",
+    ensureAuthenticated,
+    checkIfAdmin,
+    (req, res) => {
+      empService
+        .removeQualification(req.body.id, req.body.subjectId)
+        .then((data) => {
+          res
+            .status(201)
+            .json({ success: true, message: "ההסמכה הוסרה בהצלחה" });
         })
-    })
+        .catch((err) => {
+          res.status(400).json({ success: false, message: err.message });
+        });
+    }
+  );
 
-}
+  app.put(
+    "/employees/fire/:id",
+    ensureAuthenticated,
+    checkIfAdmin,
+    (req, res) => {
+      empService
+        .fireTeacherById(req.params.id)
+        .then((data) => {
+          res.status(200).json({ success: true, message: "העובד פוטר בהצלחה" });
+        })
+        .catch((err) => {
+          res.status(400).json({ success: false, message: err.message });
+        });
+    }
+  );
+};

@@ -1,58 +1,116 @@
-import { Button, Dialog, Grid, makeStyles, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import ManagementTable from './ManagementTable';
-import SchoolManageForm from './SchoolManageForm';
+import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import ManagementTable from "./ManagementTable";
+import SchoolManageForm from "./SchoolManageForm";
+import FormDialog from "./FormDialog";
 
+const useManagePanelStyles = makeStyles({
+  panel: {
+    padding: 25,
+    boxShadow: "1, 1, 1, 1 grey",
+  },
+});
 const useButtonPanelStyles = makeStyles({
-    panel: {
-        paddingTop: 10
-    },
-    button: {
-        fontSize: 18,
-        width: "20vh"
-    }
-})
+  panel: {
+    paddingTop: 20,
+  },
+  button: {
+    fontSize: 18,
+    width: "20vh",
+  },
+});
 
-const ManagementPanel = ({title, data, reloadData, tableData, addItem, addButtonLabel, addFormData, removeItem, removeButtonLabel, removeFormData}) => {
-    const buttonPanelClasses = useButtonPanelStyles()
-    const [addDialog, setAddDialog] = useState(false);
-    const [removeDialog, setRemoveDialog] = useState(false);
+const ManagementPanel = ({
+  title,
+  data,
+  reloadData,
+  tableData,
+  actions,
+  actionMap,
+}) => {
+  let [actionDialogs, setActionDialogs] = useState(actionMap);
+  const mainPanelClasses = useManagePanelStyles();
+  const buttonPanelClasses = useButtonPanelStyles();
 
-    useEffect(() => {
-        reloadData()
-    }, [addDialog, removeDialog])
+  useEffect(() => {
+    reloadData();
+  }, [actionDialogs]);
 
-    return (
-        <div>
-            <Grid container justify="center">
-                <Grid item xs={2}>
-                    <Typography variant="h3">
-                        {title}
-                    </Typography>
+  const openDialog = async (action) => {
+    let newDialogState = { ...actionDialogs };
+    await Object.keys(actionDialogs).forEach(
+      (actionDialog) => (newDialogState[actionDialog] = false)
+    );
+    newDialogState[action] = true;
+    setActionDialogs(newDialogState);
+  };
+
+  const closeDialog = async (action) => {
+    let newDialogState = { ...actionDialogs };
+    newDialogState[action] = false;
+    setActionDialogs(newDialogState);
+  };
+  return (
+    <div className={mainPanelClasses.panel}>
+      <Grid container justify="center">
+        <Grid item xs={2}>
+          <Typography variant="h3">{title}</Typography>
+        </Grid>
+        <Grid item xs={6}></Grid>
+        <Grid item xs={8}>
+          <ManagementTable
+            data={data}
+            openDialog={openDialog}
+            closeDialog={closeDialog}
+            actions={actions}
+            {...tableData}
+          />
+        </Grid>
+        <Grid item xs={8} className={buttonPanelClasses.panel}>
+          <Grid container justify="space-around">
+            {Object.keys(actions).map((actionName) => {
+              return actionName === "dialogMap" ? (
+                false
+              ) : (
+                <Grid item xs={2} key={actionName}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={buttonPanelClasses.button}
+                    onClick={() => openDialog(actionName)}
+                  >
+                    {actions[actionName].label}
+                  </Button>
                 </Grid>
-                <Grid item xs={6}></Grid>
-                <Grid item xs={8}>
-                    <ManagementTable data={data} removeItem={removeItem} handleAddDialog={setAddDialog} {...tableData}/>
-                </Grid>
-                <Grid item xs={8} className={buttonPanelClasses.panel}>
-                    <Grid container justify="space-around">
-                        {addFormData ? <Grid item xs={2}>
-                            <Button variant="contained" color="primary" className={buttonPanelClasses.button} onClick={() => setAddDialog(true)}>{addButtonLabel}</Button>
-                        </Grid> : false}
-                        {removeFormData ? <Grid item xs={2}>
-                            <Button variant="contained" color="primary" className={buttonPanelClasses.button} onClick={() => setRemoveDialog(true)}>{removeButtonLabel}</Button>
-                        </Grid> : false}
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Dialog open={addDialog} fullWidth dir="rtl" onClose={() => setAddDialog(false)}>
-                {addFormData ? <SchoolManageForm handleFormDialog={setAddDialog}  handleAction={addItem} {...addFormData}/>: "אין אפשרות להוסיף מפריט זה"}
-            </Dialog>
-            <Dialog open={removeDialog} fullWidth dir="rtl" onClose={() => setRemoveDialog(false)}>
-                {removeFormData ? <SchoolManageForm handleFormDialog={setRemoveDialog} handleAction={removeItem} {...removeFormData}/> : "אין אפשרות למחוק מפריט זה"}
-            </Dialog>
-        </div>
-    )
-}
+              );
+            })}
+          </Grid>
+        </Grid>
+      </Grid>
+      {Object.keys(actions).map((actionName) => {
+        let action = actions[actionName];
+        return actionName === "dialogMap" ? (
+          false
+        ) : (
+          <FormDialog
+            key={actionName}
+            name={action.name}
+            isOpen={actionDialogs[action.name]}
+            closeHandler={closeDialog}
+          >
+            <SchoolManageForm
+              handleFormDialog={(dialogStat) =>
+                dialogStat ? openDialog(action.name) : closeDialog(action.name)
+              }
+              handleAction={action.actionFunc}
+              {...action.form}
+              dropdownData={action.dropdown}
+            />
+          </FormDialog>
+        );
+      })}
+    </div>
+  );
+};
 
 export default ManagementPanel;
