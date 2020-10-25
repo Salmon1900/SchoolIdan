@@ -54,7 +54,6 @@ const addStudentValid = (classRec, studentId, student) => {
     reason = reason.concat(`${labels.cls.classDoesNotExistSingle}\n`);
   }
 
-  console.log("StudentId:", studentId);
   if (studentId.length !== 9) {
     reason = reason.concat(`${labels.cls.idWrongLengthSingle}`);
   } else if (!student) {

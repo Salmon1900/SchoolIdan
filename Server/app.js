@@ -61,11 +61,8 @@ require("./routes/jobContorller")(app);
 require("./routes/employeeController")(app);
 require("./routes/studentController")(app);
 require("./routes/classController")(app);
+require("./routes/examController")(app);
 require("./routes/auth/loginController")(app, passport);
-
-// loginService.verifyUser('111333001', 'password').then((res) => {
-//     console.log(res)
-// })
 
 app.listen(appProperties.port, () => {
   console.log(`Listening on ${appProperties.port}`);

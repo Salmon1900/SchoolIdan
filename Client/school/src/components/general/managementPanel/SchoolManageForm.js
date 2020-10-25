@@ -55,6 +55,7 @@ const SchoolManageForm = ({
   handleAction,
   handleFormDialog,
   actionAttribute,
+  keyData,
 }) => {
   const classes = useStyles();
   const { register, handleSubmit, errors, getValues, reset } = useForm();
@@ -91,7 +92,8 @@ const SchoolManageForm = ({
     let success = await handleAction(
       actionAttribute ? fieldData[actionAttribute] : fieldData,
       selectedData,
-      formFile
+      formFile,
+      keyData
     );
     handleFormDialog(!success);
   };

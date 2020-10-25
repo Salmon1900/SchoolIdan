@@ -5,6 +5,7 @@ import {
   School,
   Equalizer,
   FormatListBulleted,
+  AssignmentTurnedIn,
 } from "@material-ui/icons";
 import { roles } from "../roles";
 import React from "react";
@@ -43,9 +44,9 @@ export const pageList = [
   },
   {
     roles: [roles.TEACHER],
-    route: "/studentList",
-    name: "רשימת תלמידים",
-    icon: <FormatListBulleted color="primary" />,
+    route: "/grading",
+    name: "הזנת ציונים",
+    icon: <AssignmentTurnedIn color="primary" />,
   },
   {
     roles: [roles.PRINCIPAL, roles.TEACHER],

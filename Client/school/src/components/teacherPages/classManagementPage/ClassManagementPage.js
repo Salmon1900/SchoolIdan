@@ -165,10 +165,11 @@ const ClassManagementPage = ({ teacherId }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    teacherId: state.user.id,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     teacherId: state.user.id,
+//   };
+// };
 
-export default connect(mapStateToProps, null)(ClassManagementPage);
+// export default connect(mapStateToProps, null)(ClassManagementPage);
+export default ClassManagementPage;

@@ -66,6 +66,14 @@ const labels = {
     teacherNotQualified: "למורה הנבחר אין הסמכה ללמד את המקצוע הנבחר",
     wrongName: "השם שהוזן אינו חוקי",
   },
+
+  // Exams
+  exm: {
+    cannontAdd: "שגיאה בהזנת ציון",
+    studentNotInClass: "התלמיד אינו משויך לכיתה שנבחרה",
+    invalidGrade: "הציון שהוזן אינו תקין",
+    gradeNotInRange: "על הציון להיות בין 0-100",
+  },
 };
 
 module.exports = labels;

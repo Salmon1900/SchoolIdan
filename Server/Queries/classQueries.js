@@ -14,6 +14,7 @@ const classQueries = {
   removeStudentFromClass: `DELETE FROM t_class_list WHERE class_id = $1 AND student_id = $2`,
   getClassListing:
     "SELECT * FROM t_class_list WHERE class_id = $1 AND student_id = $2",
+  getClassBySubjectId: `SELECT * FROM t_classes WHERE subject_id = $1`,
   addStudentListToClass: (studentIdList) =>
     `INSERT INTO t_class_list(class_id, student_id) 
                                                VALUES ${studentIdList

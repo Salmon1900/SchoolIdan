@@ -9,7 +9,7 @@ export const initialState = {
     id: "",
   },
   management: {
-    schoolYear: new Date().getFullYear(),
+    schoolYear: String(new Date().getFullYear()),
   },
 };
 

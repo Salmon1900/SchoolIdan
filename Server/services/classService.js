@@ -18,6 +18,8 @@ const getActive = () => querySchoolDB(qry.getAllActive);
 
 const getById = (id) => querySchoolDB(qry.getById, [id]);
 
+const getBySubjectId = (subjectId) => querySchoolDB(qry.getClassBySubjectId);
+
 const getStudentsInClass = (classId) =>
   querySchoolDB(qry.getStudentsInClass, [classId]);
 
@@ -155,6 +157,8 @@ const classService = {
   activateClass,
   deleteClass,
   addNewClass,
+  getBySubjectId,
+  getListing,
 };
 
 module.exports = classService;

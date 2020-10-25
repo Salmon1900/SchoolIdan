@@ -14,6 +14,7 @@ import { roles } from "./roles";
 import { connect } from "react-redux";
 import ClassManagementPage from "./components/teacherPages/classManagementPage/ClassManagementPage";
 import StaffManagementPage from "./components/managerPages/StaffManagementPage/StaffManagementPage";
+import GradingPage from "./components/teacherPages/gradingPage/GradingPage";
 
 // Add proviodr rapper with store prop
 
@@ -27,8 +28,7 @@ let useAppStyles = makeStyles((theme) => ({
   },
 }));
 
-function App({ isLoggedIn }) {
-  const [employees, setEmployees] = useState([]);
+function App({ isLoggedIn, empId }) {
   const [navDrawerOpen, setDrawerOpen] = useState(false);
 
   const appClasses = useAppStyles();
@@ -54,7 +54,10 @@ function App({ isLoggedIn }) {
             <StaffManagementPage />
           </SafeRoute>
           <SafeRoute exact path="/classManagement">
-            <ClassManagementPage />
+            <ClassManagementPage teacherId={empId} />
+          </SafeRoute>
+          <SafeRoute exact path="/grading">
+            <GradingPage teacherId={empId} />
           </SafeRoute>
         </Switch>
         {isLoggedIn ? (
@@ -70,6 +73,7 @@ function App({ isLoggedIn }) {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.loggedIn,
+    empId: state.user.id,
   };
 };
 
