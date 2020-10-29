@@ -8,6 +8,8 @@ import { getEmployeeQualifications } from "../../api/employeeApi";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "60vw",
+    margin: 20,
   },
   details: {
     display: "flex",

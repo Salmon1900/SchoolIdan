@@ -47,3 +47,40 @@ export const gradingActions = (functions) => {
     },
   };
 };
+
+export const gradeTableData = {
+  columns: [
+    { title: "שם תלמיד", field: "student_name" },
+    { title: "ציון", field: "grade" },
+  ],
+  avgColumns: [
+    { title: "שם תלמיד", field: "student_name" },
+    { title: "ציון ממוצע", field: "avg" },
+  ],
+};
+
+export const gradeStatSections = {
+  allAvg: "ממוצע ציוני התלמידים",
+  bySubject: {
+    title: "חלוקה לפי מקצוע",
+    idProperty: "subject_id",
+    nameProperty: "subject_name",
+  },
+  byClass: {
+    title: "חלוקה לפי כיתות",
+    idProperty: "class_id",
+    nameProperty: "class_name",
+  },
+  byAge: {
+    title: "חלוקה לפני שנתון",
+    idProperty: "student_birth_year",
+    nameProperty: "student_birth_year",
+  },
+};
+
+export const ranges = {
+  fail: 54,
+  low: 70,
+  medium: 84,
+  high: 100,
+};

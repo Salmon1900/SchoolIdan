@@ -34,8 +34,31 @@ const addNewExamRec = async (exam) => {
   return querySchoolDB(qry.addExam, examDetails);
 };
 
+// StudentId, StudentName, Avrage Grade
+const getTeachersStudentsAvrageGrade = (teacherId) => {
+  return querySchoolDB(qry.getTeacherStudentAvgGrades, [teacherId]);
+};
+
+// StudentId, StudentName, Grade, Exam Date
+const getClassGrades = (classId) =>
+  querySchoolDB(qry.getClassGrades, [classId]);
+
+// StudentId, StudentName, Grade, Exam Date
+const getTeachersSubjectGrades = (teacherId, subjectId) =>
+  querySchoolDB(qry.getTeacherSubjectGrades, [teacherId, subjectId]);
+
+// StudentId, StudentName, Grade, Exam Date
+const getTeachersAgeGroupGrades = (teacherId, ageGroup) => {
+  console.log("Here", teacherId, "   ", ageGroup);
+  return querySchoolDB(qry.getTeacherAgeGroupGrades, [teacherId, ageGroup]);
+};
+
 const examService = {
   addNewExamRec,
+  getTeachersStudentsAvrageGrade,
+  getClassGrades,
+  getTeachersSubjectGrades,
+  getTeachersAgeGroupGrades,
 };
 
 module.exports = examService;

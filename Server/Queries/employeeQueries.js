@@ -26,6 +26,8 @@ const employeeQueries = {
   addQualification: `INSERT INTO t_qualified(emp_id, subject_id) VALUES($1, $2)`,
   removeQualification: `DELETE FROM t_qualified WHERE emp_id = $1 AND subject_id = $2`,
   getQualification: `SELECT * FROM t_qualified WHERE emp_id = $1 AND subject_id = $2`,
+  getAgeGroups:
+    "SELECT DISTINCT student_birth_year FROM t_classes WHERE teacher_id = $1",
 };
 
 module.exports = employeeQueries;

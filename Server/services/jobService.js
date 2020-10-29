@@ -1,12 +1,12 @@
-const { querySchoolDB } = require('../DB/SchoolDB');
-const qry = require('../Queries/jobQueries');
+const { querySchoolDB } = require("../DB/SchoolDB");
+const qry = require("../Queries/jobQueries");
 
 const getAllJobs = () => {
-    return querySchoolDB(qry.getAllJobs);
-}
+  return querySchoolDB(qry.getAllJobs);
+};
 
 const jobService = {
-    getJobList: getAllJobs
-}
+  getJobList: getAllJobs,
+};
 
 module.exports = jobService;

@@ -146,7 +146,10 @@ const StaffManagementPage = ({ schoolYear }) => {
       (subjects) => (data["availableSubjects"] = subjects)
     );
     await getEmployeeClasses(selectedTeacher.emp_id).then(
-      (classes) => (data["toughtClasses"] = classes)
+      (classes) =>
+        (data["toughtClasses"] = classes.filter(
+          (classObj) => classObj.isactive
+        ))
     );
     setSelectedTeacherData(data);
   };

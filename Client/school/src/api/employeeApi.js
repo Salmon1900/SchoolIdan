@@ -64,3 +64,6 @@ export const fireTeacherById = (id) => {
 export const getEmployeeById = (id) => {
   return get(`${serverIP}/employees/get/${id}`);
 };
+
+export const getTeacherAgeGroups = (id) =>
+  get(`${serverIP}/employees/ageGroups/${id}`);

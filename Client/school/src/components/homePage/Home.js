@@ -14,8 +14,13 @@ const Home = () => {
   }, []);
 
   return (
-    <Grid>
-      <EmployeeList employees={employees} />
+    <Grid container>
+      <Grid item xs={8}>
+        <EmployeeList employees={employees} />
+      </Grid>
+      <Grid item xs={4}>
+        <BirthdayCard employees={employees} daysAhead={7} />
+      </Grid>
     </Grid>
   );
 };

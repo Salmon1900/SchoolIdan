@@ -12,9 +12,6 @@ import { addGradeToStudent } from "../../../api/gradingApi";
 
 // TODO:
 // Selector where you see teachers active classes relevant to this year
-// When A class is chosen present list of students in that class
-// Has button to add grade by every student
-// Button open school from dialog for adding grade - enter grade & date
 
 const usePageStyles = makeStyles({
   paper: {

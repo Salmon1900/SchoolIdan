@@ -59,6 +59,12 @@ module.exports = (app) => {
     empService.getNotQualifiedFor(req.params.id).then((data) => res.send(data));
   });
 
+  app.get("/employees/ageGroups/:id", ensureAuthenticated, (req, res) => {
+    empService
+      .getEmployeeToughtAgeGroups(req.params.id)
+      .then((data) => res.send(data));
+  });
+
   app.post(
     "/employees/qualif/add",
     ensureAuthenticated,

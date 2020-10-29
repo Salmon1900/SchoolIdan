@@ -32,7 +32,6 @@ let corsOptions = {
 //     //     signed: true
 //   },
 // };
-
 // Middlewares
 app.use(cors(corsOptions));
 app.use(

@@ -38,7 +38,7 @@ export const pageList = [
   },
   {
     roles: [roles.TEACHER],
-    route: "/studentStats",
+    route: "/stats",
     name: "נתוני תלמידים",
     icon: <Equalizer color="primary" />,
   },

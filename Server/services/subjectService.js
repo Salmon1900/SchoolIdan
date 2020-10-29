@@ -1,7 +1,7 @@
 const { querySchoolDB } = require("../DB/SchoolDB");
 const qry = require("../Queries/subjectQueries");
 const labels = require("../utils/labels");
-const classService = require("../services/classService");
+// const classService = require("../services/classService");
 
 const getAllSubjects = () => {
   return querySchoolDB(qry.getAllSubjects);
@@ -27,7 +27,8 @@ const deactivateById = async (id) => {
     throw failReason;
   }
 
-  let classesWithSubject = await classService.getBySubjectId(id);
+  let classesWithSubject = await querySchoolDB(qry.getClassesBySubject, [id]);
+  // let classesWithSubject = await classService.getBySubjectId(id);
   classesWithSubject.forEach((classObj) => deactivateById(classObj.class_id));
   return querySchoolDB(qry.deactivateById, [id]);
 };
@@ -51,7 +52,7 @@ const subjectService = {
   getSubjectById: getSubjectById,
   getActive: getActive,
   deactivateById: deactivateById,
-  addNewSubejct: addNewSubejct,
+  addNewSubejct,
 };
 
 module.exports = subjectService;

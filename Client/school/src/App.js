@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import ClassManagementPage from "./components/teacherPages/classManagementPage/ClassManagementPage";
 import StaffManagementPage from "./components/managerPages/StaffManagementPage/StaffManagementPage";
 import GradingPage from "./components/teacherPages/gradingPage/GradingPage";
+import StudentStatsPage from "./components/teacherPages/studentStatsPage/StudentStatsPage";
 
 // Add proviodr rapper with store prop
 
@@ -58,6 +59,9 @@ function App({ isLoggedIn, empId }) {
           </SafeRoute>
           <SafeRoute exact path="/grading">
             <GradingPage teacherId={empId} />
+          </SafeRoute>
+          <SafeRoute exact path="/stats">
+            <StudentStatsPage teacherId={empId} />
           </SafeRoute>
         </Switch>
         {isLoggedIn ? (
