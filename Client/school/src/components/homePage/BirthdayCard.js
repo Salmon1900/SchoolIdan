@@ -56,7 +56,7 @@ const BirthdayCard = ({ employees, daysAhead }) => {
           </Icon>
         </Typography>
         <List>
-          {employees
+          {employees ? employees
             .filter((emp) => checkIfBirthdayNear(emp.date_of_birth))
             .map((emp) => (
               <ListItem key={emp.emp_id}>
@@ -65,7 +65,7 @@ const BirthdayCard = ({ employees, daysAhead }) => {
                   secondary={formatBirthday(emp.date_of_birth)}
                 />
               </ListItem>
-            ))}
+            )): false}
         </List>
       </CardContent>
     </Card>
