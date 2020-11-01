@@ -21,7 +21,7 @@ module.exports = (app) => {
 
   app.post("/employees/new", multer().single("profile"), (req, res) => {
     empService
-      .createNewEmployee(req.body, req.file.buffer)
+      .createNewEmployee(req.body, req.file ? req.file.buffer : null)
       .then((data) => {
         res.status(201).json({ success: true, message: "נוסף בהצלחה" });
       })

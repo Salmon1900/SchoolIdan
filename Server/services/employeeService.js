@@ -84,7 +84,7 @@ const addQualification = async (empId, subjectId) => {
   return querySchoolDB(qry.addQualification, [empId, subjectId]);
 };
 
-const createNewEmployee = async (newEmployee, profilePic) => {
+const createNewEmployee = async (newEmployee, profilePic = null) => {
   // Check if request data passes rules
   let empValidation = newEmpValid(newEmployee);
 

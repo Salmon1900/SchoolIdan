@@ -35,6 +35,11 @@ const SubjectManagementSection = () => {
   const removeSubject = async (fieldData, selectData = {}) => {
     let success;
     // If data sent with dropdown use that else use normal data
+    console.log(fieldData);
+    if (!selectData.subjects && !Object.keys(selectData).length) {
+      alert("אנא מלא את כל השדות");
+      return false;
+    }
     await deactiveSubject(
       Object.keys(selectData).length ? selectData.subjects : fieldData
     ).then((res) => {
