@@ -65,6 +65,10 @@ const StaffManagementPage = ({ schoolYear }) => {
 
   const addQualif = async (fieldData, selectData = {}) => {
     let success;
+    if (!selectData.availableSubjects) {
+      alert("אנא בחר מקצוע להוספה");
+      return false;
+    }
     await addQualificationToEmp(
       selectedTeacher.emp_id,
       selectData.availableSubjects
@@ -81,6 +85,10 @@ const StaffManagementPage = ({ schoolYear }) => {
 
   const removeQualif = async (fieldData, selectData = {}) => {
     let success;
+    if (!selectData.qualifications) {
+      alert("אנא בחר מקצוע להסרה");
+      return false;
+    }
     await removeEmpQualification(
       selectedTeacher.emp_id,
       selectData.qualifications
@@ -97,6 +105,10 @@ const StaffManagementPage = ({ schoolYear }) => {
 
   const assignClass = async (fieldData, selectData = {}) => {
     let success;
+    if (!selectData.qualifications) {
+      alert("אנא מלא את כל השדות");
+      return false;
+    }
     await createNewClass({
       name: fieldData.className,
       subjectId: selectData.qualifications,
@@ -116,6 +128,11 @@ const StaffManagementPage = ({ schoolYear }) => {
 
   const deassignClass = async (fieldData, selectData = {}) => {
     let success;
+    if (!selectData.toughtClasses) {
+      alert("אנא בחר כיתה");
+      return false;
+    }
+
     await deactivateClass(selectData.toughtClasses).then((res) => {
       alert(res.message);
       success = res.success;

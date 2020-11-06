@@ -72,6 +72,11 @@ const ClassManagementPage = ({ teacherId }) => {
 
   const addStudent = async (fieldData, selectData = {}) => {
     let success;
+
+    if (!selectData.availableStudents) {
+      alert("אנא מלא את כל השדות");
+      return false;
+    }
     await addStudentToClass(
       selectedClass.class_id,
       selectData.availableStudents
@@ -88,6 +93,10 @@ const ClassManagementPage = ({ teacherId }) => {
 
   const removeStudent = async (fieldData, selectData = {}) => {
     let success;
+    if (!selectData.students) {
+      alert("אנא מלא את כל השדות");
+      return false;
+    }
     await removeStudentFromClass(
       selectedClass.class_id,
       selectData.students

@@ -26,7 +26,7 @@ Client:
 [] - Add student to class
     [] - Change to auto complete?
     [] - Error - validation not working?
-[X?] - Pauses before potential out-of-memory crash
+[X] - Pauses before potential out-of-memory crash
 [] - Add avrage grades table
 
 Extra design imporvements 
