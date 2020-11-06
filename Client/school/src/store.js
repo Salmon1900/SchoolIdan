@@ -13,8 +13,6 @@ export const initialState = {
   },
 };
 
-// const initialState = {};
-
 const middleware = [thunk];
 
 const store = createStore(

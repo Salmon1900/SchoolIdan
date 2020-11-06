@@ -7,7 +7,7 @@ import FormDialog from "./FormDialog";
 const useManagePanelStyles = makeStyles({
   panel: {
     padding: 25,
-    boxShadow: "1, 1, 1, 1 grey",
+    boxShadow: "-5px 7px 20px 7px black",
   },
 });
 const useButtonPanelStyles = makeStyles({
@@ -54,7 +54,7 @@ const ManagementPanel = ({
     <div className={mainPanelClasses.panel}>
       <Grid container justify="center">
         <Grid item xs={2}>
-          <Typography variant="h3">{title}</Typography>
+          <Typography variant="h4">{title}</Typography>
         </Grid>
         <Grid item xs={6}></Grid>
         <Grid item xs={8}>

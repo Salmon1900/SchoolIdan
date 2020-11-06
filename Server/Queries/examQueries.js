@@ -7,7 +7,7 @@ const examQueries = {
                       ON exm.student_id = stud.student_id
                   WHERE stud.student_id = $1
                   GROUP BY stud.student_id, stud.student_name`,
-  getTeacherStudentAvgGrades: `SELECT stud.student_id, stud.student_name, AVG(grade)
+  getTeacherStudentAvgGrades: `SELECT stud.student_id, stud.student_name, AVG(grade) as grade
                                FROM t_exams as exm 
                                RIGHT JOIN t_students as stud
                                    ON exm.student_id = stud.student_id

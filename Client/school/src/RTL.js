@@ -11,12 +11,17 @@ const RTL = (props) => {
     direction: "rtl",
     palette: {
       primary: {
-        main: "#058ED9",
+        // main: "#058ED9",
+        main: "#FFA100",
       },
       secondary: {
         main: "#333333",
       },
       // background: "#F4EBD9"
+      category1: "#FFA160",
+      category2: "#FF6100",
+      category3: "#F9CA1D",
+      category4: "#F9301D",
     },
     typography: {
       fontFamily: "sans-serif",

@@ -21,13 +21,24 @@ const StudentStatsPage = ({ teacherId }) => {
   const [ageGroups, setAgeGroups] = useState([]);
 
   useEffect(() => {
-    Promise.all([loadQualifications(), loadClasses(), loadAgeGroups()]);
+    if (teacherId) {
+      Promise.all([
+        loadQualifications(),
+        loadClasses(),
+        loadAgeGroups(),
+        loadStudentAvgList(teacherId),
+      ]);
+    }
     // loadGradeData();
-  }, []);
+  }, [teacherId]);
 
   // Get all students - avg grades
-  const loadStudentAvgList = async () => {
-    getTeacherStudentAvg(teacherId);
+  const loadStudentAvgList = async (teacher) => {
+    if (teacher) {
+      return getTeacherStudentAvg(teacher);
+    } else {
+      return [];
+    }
   };
 
   const loadQualifications = () => {
@@ -53,64 +64,80 @@ const StudentStatsPage = ({ teacherId }) => {
     getTeacherAgeGroupGrades(teacherId, ageGroup);
 
   const renderPanels = (
-    categoryList,
+    categoryName,
+    categoryList = [],
     idProperty,
     nameProperty,
-    loadGradesFunc
+    loadGradesFunc,
+    color
   ) => {
     return categoryList.map((category) => (
-      <Grid item xs={4} key={category[idProperty]}>
+      <Grid item xs={3} key={category[idProperty]}>
         <GradePanel
           id={category[idProperty]}
           title={category[nameProperty]}
           loadGrades={loadGradesFunc}
+          type={categoryName}
+          color={color}
         />
       </Grid>
     ));
   };
 
-  console.log("High comp");
   return (
-    <Paper>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography component="h3" variant="h3">
-            {sections.allAvg}
-          </Typography>
-        </Grid>
-        {/* {renderPanels(studentAvgList)} */}
-        <Grid item xs={12}>
-          <Typography component="h3" variant="h3">
+    <Paper elevation={0}>
+      <Grid container justify="center">
+        {teacherId ? (
+          <Grid item xs={3}>
+            <GradePanel
+              id={teacherId}
+              title={sections.allAvg.name}
+              loadGrades={loadStudentAvgList}
+              type={""}
+              color={sections.allAvg.color}
+            />
+          </Grid>
+        ) : (
+          false
+        )}
+        {/* <Grid item xs={12}>
+          <Typography component="h5" variant="h5">
             {sections.bySubject.title}
           </Typography>
-        </Grid>
+        </Grid> */}
         {renderPanels(
+          sections.bySubject.name,
           qualfications,
           sections.bySubject.idProperty,
           sections.bySubject.nameProperty,
-          loadSubjectGrades
+          loadSubjectGrades,
+          sections.bySubject.color
         )}
-        <Grid item xs={12}>
-          <Typography component="h3" variant="h3">
+        {/* <Grid item xs={12}>
+          <Typography component="h5" variant="h5">
             {sections.byClass.title}
           </Typography>
-        </Grid>
+        </Grid> */}
         {renderPanels(
+          sections.byClass.name,
           classes,
           sections.byClass.idProperty,
           sections.byClass.nameProperty,
-          loadClassGrades
+          loadClassGrades,
+          sections.byClass.color
         )}
-        <Grid item xs={12}>
-          <Typography component="h3" variant="h3">
+        {/* <Grid item xs={12}>
+          <Typography component="h5" variant="h5">
             {sections.byAge.title}
           </Typography>
-        </Grid>
+        </Grid> */}
         {renderPanels(
+          sections.byAge.name,
           ageGroups,
           sections.byAge.idProperty,
           sections.byAge.nameProperty,
-          loadAgeGroupGrades
+          loadAgeGroupGrades,
+          sections.byAge.color
         )}
       </Grid>
     </Paper>

@@ -1,18 +1,23 @@
-const { Client } = require("pg");
+// Server setup
 const express = require("express");
 const app = express();
-const cors = require("cors");
+const appProperties = require("./appProperties");
+const http = require("http");
+const socketIO = require("socket.io");
+
 require("dotenv").config();
+
+app.set("port", appProperties.port);
+
+// Request and response
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("cookie-session");
+
+// Auth
 const passport = require("passport");
-const appProperties = require("./appProperties");
-const router = express.Router();
 const initializePassport = require("./auth/passportConfig");
-const multer = require("multer");
-const loginService = require("./services/auth/loginService");
-const empService = require("./services/employeeService");
+const cors = require("cors");
 
 initializePassport(passport);
 
@@ -21,24 +26,11 @@ let corsOptions = {
   credentials: true,
 };
 
-// let sessionDetails = {
-//   secret: process.env.COOKIE_SECRET,
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: {
-//     sameSite: "none",
-//     secure: true,
-
-//     //     signed: true
-//   },
-// };
 // Middlewares
 app.use(cors(corsOptions));
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
-    // secure: true,
-    // sameSite: "None",
     httpOnly: true,
   })
 );
@@ -47,22 +39,27 @@ app.use(passport.session());
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(bodyParser.json());
-// app.use(multer().single('profile'))
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
 );
 
+const server = http.createServer(app);
+const io = socketIO(server);
+server.listen(appProperties.port, () => {
+  console.log(`Listening on ${appProperties.port}`);
+});
+
+// io.on("connection", (socket) => {
+//   io.emit("newEmp", { message: "On Connetion" });
+// });
+
 // Import all controllers
 require("./routes/subjectController")(app);
 require("./routes/jobContorller")(app);
-require("./routes/employeeController")(app);
+require("./routes/employeeController")(app, io);
 require("./routes/studentController")(app);
 require("./routes/classController")(app);
 require("./routes/examController")(app);
-require("./routes/auth/loginController")(app, passport);
-
-app.listen(appProperties.port, () => {
-  console.log(`Listening on ${appProperties.port}`);
-});
+require("./routes/auth/loginController")(app, passport, io);

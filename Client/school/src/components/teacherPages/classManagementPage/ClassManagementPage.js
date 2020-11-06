@@ -16,6 +16,7 @@ import EntityManager from "../../general/managementPanel/EntityManager";
 import EntityDialog from "../../general/managementPanel/EntityDialog";
 import { classItemActions } from "../../../consts/classData";
 import { getStudentAgeGroup } from "../../../api/studentApi";
+import { alertFlag, alertWarning } from "../../../consts/reactAlert";
 
 const ClassManagementPage = ({ teacherId }) => {
   const [classes, setClasses] = useState([]);
@@ -38,12 +39,14 @@ const ClassManagementPage = ({ teacherId }) => {
   };
 
   useEffect(() => {
-    loadClasses();
+    if (teacherId) {
+      loadClasses();
+    }
 
     if (selectedClass.class_id) {
       loadSelectedClassData();
     }
-  }, [selectedClass.class_id]);
+  }, [selectedClass.class_id, teacherId]);
 
   const loadSelectedClassData = async () => {
     let data = {};
@@ -71,14 +74,14 @@ const ClassManagementPage = ({ teacherId }) => {
     let success;
 
     if (!selectData.availableStudents) {
-      alert("אנא מלא את כל השדות");
+      alertWarning("אנא מלא את כל השדות");
       return false;
     }
     await addStudentToClass(
       selectedClass.class_id,
       selectData.availableStudents
     ).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
       success = res.success;
       if (res.success) {
         loadSelectedClassData();
@@ -91,14 +94,14 @@ const ClassManagementPage = ({ teacherId }) => {
   const removeStudent = async (fieldData, selectData = {}) => {
     let success;
     if (!selectData.students) {
-      alert("אנא מלא את כל השדות");
+      alertWarning("אנא מלא את כל השדות");
       return false;
     }
     await removeStudentFromClass(
       selectedClass.class_id,
       selectData.students
     ).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
       success = res.success;
       if (res.success) {
         loadSelectedClassData();

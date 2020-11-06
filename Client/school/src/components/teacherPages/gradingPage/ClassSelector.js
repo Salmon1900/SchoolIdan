@@ -1,17 +1,26 @@
-import React from "react";
-import { Select, FormControl, MenuItem, InputLabel } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  makeStyles,
+} from "@material-ui/core";
+
+const useStyles = makeStyles({
+  select: {
+    width: "50%",
+  },
+});
 
 const ClassSelector = ({
   selectedClassId,
   setSelectedClass,
   classList = [],
 }) => {
+  const classes = useStyles();
   return (
-    <FormControl
-      variant="outlined"
-      fullWidth
-      // className={classes.formControl}
-    >
+    <FormControl variant="outlined" fullWidth className={classes.select}>
       <InputLabel id="class-select-label">בחר כיתה</InputLabel>
       <Select
         id="class-select"

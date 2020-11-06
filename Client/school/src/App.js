@@ -11,11 +11,19 @@ import { makeStyles, useTheme } from "@material-ui/core";
 import NavDrawer from "./components/general/NavDrawer";
 import SchoolManagementPage from "./components/managerPages/SchoolManagementPage/SchoolManagementPage";
 import { roles } from "./roles";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import "animate.css/animate.compat.css";
 import { connect } from "react-redux";
 import ClassManagementPage from "./components/teacherPages/classManagementPage/ClassManagementPage";
 import StaffManagementPage from "./components/managerPages/StaffManagementPage/StaffManagementPage";
 import GradingPage from "./components/teacherPages/gradingPage/GradingPage";
 import StudentStatsPage from "./components/teacherPages/studentStatsPage/StudentStatsPage";
+import ClassManageInspectionPage from "./components/managerPages/teacherInspection/ClassManageInspectionPage";
+import GradingInspectionPage from "./components/managerPages/teacherInspection/GradingInspectionPage";
+import StudentStatsInspectionPage from "./components/managerPages/teacherInspection/StudentStatsInspectionPage";
+import { socket } from "./api/socket";
+import { alertSuccess } from "./consts/reactAlert";
 
 // Add proviodr rapper with store prop
 
@@ -32,10 +40,13 @@ let useAppStyles = makeStyles((theme) => ({
 function App({ isLoggedIn, empId }) {
   const [navDrawerOpen, setDrawerOpen] = useState(false);
 
+  useEffect(() => {}, []);
+
   const appClasses = useAppStyles();
 
   return (
     <RTL>
+      <ReactNotification />
       <div className={appClasses.root}>
         <Header openNavDrawer={setDrawerOpen} />
         <Switch>
@@ -62,6 +73,15 @@ function App({ isLoggedIn, empId }) {
           </SafeRoute>
           <SafeRoute exact path="/stats">
             <StudentStatsPage teacherId={empId} />
+          </SafeRoute>
+          <SafeRoute exact path="/ins/classManagement">
+            <ClassManageInspectionPage />
+          </SafeRoute>
+          <SafeRoute exact path="/ins/grading">
+            <GradingInspectionPage />
+          </SafeRoute>
+          <SafeRoute exact path="/ins/stats">
+            <StudentStatsInspectionPage />
           </SafeRoute>
         </Switch>
         {isLoggedIn ? (

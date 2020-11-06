@@ -18,7 +18,8 @@ const getHiredTeachers = () => querySchoolDB(qry.getHired);
 
 const fireTeacherById = async (id) => {
   let teacher = await getEmployeeById(id);
-  if (!teacher) {
+  console.log(teacher);
+  if (!teacher.length) {
     let failReason = new ErrorHandle(labels.emp.cannotFire);
     failReason.add(`${labels.emp.doesNotExist}\n`);
     throw failReason;
@@ -129,8 +130,6 @@ const getEmployeeQualifiationsById = (id) => {
 const getEmployeesQualifiedForSubejct = (subjectId) => {
   return querySchoolDB(qry.getEmpQualifiedForSubject, [subjectId]);
 };
-
-// TODO: get all fired teacher/employees?
 
 const employeeService = {
   getEmployeeList: getAllEmployees,

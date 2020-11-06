@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "46px",
     backgroundColor: theme.palette.primary.main,
   },
+  button: {
+    width: "5vw",
+  },
 }));
 
 const EntityManager = ({
@@ -78,6 +81,7 @@ const EntityManager = ({
                   onClick={() => openDialog(actionName)}
                   color="primary"
                   variant="contained"
+                  className={classes.button}
                 >
                   {actions[actionName].label}
                 </Button>

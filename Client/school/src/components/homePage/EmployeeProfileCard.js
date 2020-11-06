@@ -4,6 +4,7 @@ import Profile from "../../res/ProfilePlaceholder.png";
 
 import React, { useEffect, useState } from "react";
 import { getEmployeeQualifications } from "../../api/employeeApi";
+import { roles } from "../../roles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,9 +68,12 @@ const EmployeeProfileCard = ({ employee, qualifications }) => {
             {employee.emp_id}
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
-            מוסמך ללמד:
-            {subjectsEmpCanTeach.length
-              ? subjectsEmpCanTeach.map((q) => q.subject_name).join(",")
+            {employee.job_id == roles.PRINCIPAL
+              ? "מנהל"
+              : subjectsEmpCanTeach.length
+              ? `הסמכות: ${subjectsEmpCanTeach
+                  .map((q) => q.subject_name)
+                  .join(",")}`
               : "חסר הסמכה"}
           </Typography>
         </CardContent>

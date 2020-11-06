@@ -1,15 +1,9 @@
-const jobService = require('../services/jobService');
-const router = require('express').Router()
+const jobService = require("../services/jobService");
 
-// router.get('/jobs', (req, res) => {
-//     jobService.getJobList().then((data) => {
-//         res.send(data);
-//     })
-// })
 module.exports = (app) => {
-    app.get('/jobs', (req, res) => {
-        jobService.getJobList().then((data) => {
-            res.send(data);
-        })
-    })
-}
+  app.get("/jobs", (req, res) => {
+    jobService.getJobList().then((data) => {
+      res.send(data);
+    });
+  });
+};
