@@ -40,6 +40,10 @@ module.exports = (app) => {
     empService.getEmployeeClasses(req.params.id).then((data) => res.send(data));
   });
 
+  app.get("/employees/classesInYear/:id/:year", ensureAuthenticated, (req, res) => {
+    empService.getEmployeeClassesForYear(req.params.id, req.params.year).then((data) => res.send(data));
+  });
+
   app.get(
     "/employees/findTeacher/:subjectId",
     ensureAuthenticated,

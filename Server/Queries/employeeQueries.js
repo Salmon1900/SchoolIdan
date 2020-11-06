@@ -16,6 +16,7 @@ const employeeQueries = {
                                                 FROM t_qualified
                                                 WHERE subject_id = $1)`,
   getEmployeeClasses: `SELECT * FROM t_classes WHERE teacher_id = $1`,
+  getEmployeeClassesForYear: `SELECT * FROM t_classes WHERE teacher_id = $1 AND school_year = $2`,
   getHired: `SELECT emp_id, emp_name, password, job_id, date_of_birth, ENCODE(picture, 'base64') FROM t_employees WHERE job_id = 2 AND is_fired = false`,
   fireById: `UPDATE t_employees SET is_fired = true WHERE emp_id = $1`,
   getNotQualified: `SELECT * FROM t_subjects

@@ -14,11 +14,11 @@ export const addGradeToStudent = (studentId, classId, grade, examDate) => {
   return post(`${serverIP}/exams/add`, exam);
 };
 
-export const getTeacherStudentAvg = (teacherId) =>
-  get(`${serverIP}/exams/teacher/avg/${teacherId}`);
+export const getTeacherStudentAvg = (teacherId, year) =>
+  get(`${serverIP}/exams/teacher/avg/${teacherId}/${year}`);
 export const getClassGrades = (classId) =>
   get(`${serverIP}/exams/teacher/class/${classId}`);
-export const getTeacherSubjectGrades = (teacherId, subjectId) =>
-  get(`${serverIP}/exams/teacher/subject/${teacherId}/${subjectId}`);
-export const getTeacherAgeGroupGrades = (teacherId, ageGroup) =>
-  get(`${serverIP}/exams/teacher/age/${teacherId}/${ageGroup}`);
+export const getTeacherSubjectGrades = (teacherId, subjectId, year) =>
+  get(`${serverIP}/exams/teacher/subject/${teacherId}/${subjectId}/${year}`);
+export const getTeacherAgeGroupGrades = (teacherId, ageGroup, year) =>
+  get(`${serverIP}/exams/teacher/age/${teacherId}/${ageGroup}/${year}`);

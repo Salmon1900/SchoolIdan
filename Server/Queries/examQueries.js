@@ -7,7 +7,7 @@ const examQueries = {
                       ON exm.student_id = stud.student_id
                   WHERE stud.student_id = $1
                   GROUP BY stud.student_id, stud.student_name`,
-  getTeacherStudentAvgGrades: `SELECT stud.student_id, stud.student_name, AVG(grade)
+  getTeacherStudentAvgGradesForYear: `SELECT stud.student_id, stud.student_name, AVG(grade)
                                FROM t_exams as exm 
                                RIGHT JOIN t_students as stud
                                    ON exm.student_id = stud.student_id
@@ -16,28 +16,31 @@ const examQueries = {
                                                            WHERE class_id IN (SELECT class_id
                                                                            FROM t_classes
                                                                            WHERE teacher_id = $1))
+                                                             AND school_year = $2 
                                GROUP BY stud.student_id, stud.student_name`,
-  getTeacherSubjectGrades: `SELECT stud.student_id, stud.student_name, exm.grade, exm.exam_date
+  getTeacherSubjectGradesForYear: `SELECT stud.student_id, stud.student_name, exm.grade, exm.exam_date
                             FROM t_exams as exm 
                             RIGHT JOIN t_students as stud
                                 ON exm.student_id = stud.student_id
                             WHERE exm.class_id IN (SELECT class_id 
                                                    FROM t_classes
                                                    WHERE teacher_id = $1
-                                                     AND subject_id = $2)`,
+                                                     AND subject_id = $2
+                                                     AND school_year = $3)`,
   getClassGrades: `SELECT stud.student_id, stud.student_name, exm.grade, exm.exam_date
                    FROM t_exams as exm 
                    RIGHT JOIN t_students as stud
                        ON exm.student_id = stud.student_id
                    WHERE exm.class_id = $1`,
-  getTeacherAgeGroupGrades: `SELECT stud.student_id, stud.student_name, exm.grade, exm.exam_date
+  getTeacherAgeGroupGradesForYear: `SELECT stud.student_id, stud.student_name, exm.grade, exm.exam_date
                              FROM t_exams as exm 
                              RIGHT JOIN t_students as stud
                                  ON exm.student_id = stud.student_id
                              WHERE exm.class_id IN (SELECT class_id 
                                                     FROM t_classes
                                                     WHERE teacher_id = $1
-                                                      AND student_birth_year = $2)`,
+                                                      AND student_birth_year = $2
+                                                      AND school_year = $3)`,
 };
 
 module.exports = examQueries;

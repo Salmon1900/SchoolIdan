@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Divider, Button, makeStyles } from "@material-ui/core";
+import { Grid, Divider, Button, makeStyles, Typography } from "@material-ui/core";
 import FormDialog from "./FormDialog";
 import SchoolManageForm from "./SchoolManageForm";
 
@@ -78,12 +78,15 @@ const EntityManager = ({
                   onClick={() => openDialog(actionName)}
                   color="primary"
                   variant="contained"
+                  fullWidth
                 >
                   {actions[actionName].label}
                 </Button>
               </Grid>
             ) : (
-              false
+              <Grid item xs ={2} key={actionName}> 
+              {"פעולה \nלא זמינה"}
+              </Grid>
             );
           })}
         </Grid>

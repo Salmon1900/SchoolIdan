@@ -35,8 +35,8 @@ const addNewExamRec = async (exam) => {
 };
 
 // StudentId, StudentName, Avrage Grade
-const getTeachersStudentsAvrageGrade = (teacherId) => {
-  return querySchoolDB(qry.getTeacherStudentAvgGrades, [teacherId]);
+const getTeachersStudentsAvrageGradeForYear = (teacherId, year="2020") => {
+  return querySchoolDB(qry.getTeacherStudentAvgGradesForYear, [teacherId, year]);
 };
 
 // StudentId, StudentName, Grade, Exam Date
@@ -44,21 +44,20 @@ const getClassGrades = (classId) =>
   querySchoolDB(qry.getClassGrades, [classId]);
 
 // StudentId, StudentName, Grade, Exam Date
-const getTeachersSubjectGrades = (teacherId, subjectId) =>
-  querySchoolDB(qry.getTeacherSubjectGrades, [teacherId, subjectId]);
+const getTeachersSubjectGradesForYear = (teacherId, subjectId, year="2020") =>
+  querySchoolDB(qry.getTeacherSubjectGradesForYear, [teacherId, subjectId, year]);
 
 // StudentId, StudentName, Grade, Exam Date
-const getTeachersAgeGroupGrades = (teacherId, ageGroup) => {
-  console.log("Here", teacherId, "   ", ageGroup);
-  return querySchoolDB(qry.getTeacherAgeGroupGrades, [teacherId, ageGroup]);
+const getTeachersAgeGroupGradesForYear = (teacherId, ageGroup, year="2020") => {
+  return querySchoolDB(qry.getTeacherAgeGroupGradesForYear, [teacherId, ageGroup, year]);
 };
 
 const examService = {
   addNewExamRec,
-  getTeachersStudentsAvrageGrade,
+  getTeachersStudentsAvrageGrade: getTeachersStudentsAvrageGradeForYear,
   getClassGrades,
-  getTeachersSubjectGrades,
-  getTeachersAgeGroupGrades,
+  getTeachersSubjectGrades: getTeachersSubjectGradesForYear,
+  getTeachersAgeGroupGrades: getTeachersAgeGroupGradesForYear,
 };
 
 module.exports = examService;

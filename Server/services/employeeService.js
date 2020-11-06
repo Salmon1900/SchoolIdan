@@ -118,6 +118,9 @@ const createNewEmployee = async (newEmployee, profilePic) => {
 
 const getEmployeeClasses = (id) => querySchoolDB(qry.getEmployeeClasses, [id]);
 
+const getEmployeeClassesForYear = (id, year) => querySchoolDB(qry.getEmployeeClassesForYear, [id, year]);
+
+
 const getEmployeeToughtAgeGroups = async (id) => {
   return querySchoolDB(qry.getAgeGroups, [id]);
 };
@@ -139,6 +142,7 @@ const employeeService = {
   getEmpQualifications: getEmployeeQualifiationsById,
   getQualifiedForSubject: getEmployeesQualifiedForSubejct,
   getEmployeeClasses,
+  getEmployeeClassesForYear,
   getHiredTeachers,
   fireTeacherById,
   getNotQualifiedFor,

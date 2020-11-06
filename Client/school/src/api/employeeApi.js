@@ -57,6 +57,10 @@ export const getEmployeeClasses = (id) => {
   return get(`${serverIP}/employees/classes/${id}`);
 };
 
+export const getEmployeeClassesForYear = (id, year) => {
+  return get(`${serverIP}/employees/classesInYear/${id}/${year}`);
+};
+
 export const fireTeacherById = (id) => {
   return put(`${serverIP}/employees/fire/${id}`);
 };

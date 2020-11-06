@@ -10,24 +10,28 @@ import {
   getEmployeeQualifications,
   getEmployeeClasses,
   getTeacherAgeGroups,
+  getEmployeeClassesForYear,
 } from "../../../api/employeeApi";
 import { Paper, Grid, Typography } from "@material-ui/core";
 import { gradeStatSections as sections } from "../../../consts/gradingData";
+import { useSelector } from "react-redux";
+import SchoolYearSelector from "../SchoolYearSelector";
 
 const StudentStatsPage = ({ teacherId }) => {
   const [loading, setLoading] = useState(true);
   const [qualfications, setQualifications] = useState([]);
   const [classes, setClasses] = useState([]);
   const [ageGroups, setAgeGroups] = useState([]);
+  const selectedYear = useSelector(state => state.management.selectedSchoolYear);
 
   useEffect(() => {
     Promise.all([loadQualifications(), loadClasses(), loadAgeGroups()]);
     // loadGradeData();
-  }, []);
+  }, [selectedYear]);
 
   // Get all students - avg grades
   const loadStudentAvgList = async () => {
-    getTeacherStudentAvg(teacherId);
+    getTeacherStudentAvg(teacherId, selectedYear);
   };
 
   const loadQualifications = () => {
@@ -37,10 +41,10 @@ const StudentStatsPage = ({ teacherId }) => {
   };
 
   const loadSubjectGrades = (subjectId) =>
-    getTeacherSubjectGrades(teacherId, subjectId);
+    getTeacherSubjectGrades(teacherId, subjectId, selectedYear);
 
   const loadClasses = () => {
-    getEmployeeClasses(teacherId).then((classes) => setClasses(classes));
+    getEmployeeClassesForYear(teacherId, selectedYear).then((classes) => setClasses(classes));
   };
 
   const loadClassGrades = (classId) => getClassGrades(classId);
@@ -50,7 +54,7 @@ const StudentStatsPage = ({ teacherId }) => {
   };
 
   const loadAgeGroupGrades = (ageGroup) =>
-    getTeacherAgeGroupGrades(teacherId, ageGroup);
+    getTeacherAgeGroupGrades(teacherId, ageGroup, selectedYear);
 
   const renderPanels = (
     categoryList,
@@ -64,15 +68,18 @@ const StudentStatsPage = ({ teacherId }) => {
           id={category[idProperty]}
           title={category[nameProperty]}
           loadGrades={loadGradesFunc}
+          yearOfData={selectedYear}
         />
       </Grid>
     ));
   };
 
-  console.log("High comp");
   return (
     <Paper>
       <Grid container>
+        <Grid item xs={12}>
+          <SchoolYearSelector/>
+        </Grid>
         <Grid item xs={12}>
           <Typography component="h3" variant="h3">
             {sections.allAvg}

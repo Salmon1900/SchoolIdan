@@ -3,12 +3,16 @@ import { makeStyles, Paper, Typography, Grid } from "@material-ui/core";
 import ManagementTable from "../general/managementPanel/ManagementTable";
 import { classStudentsTable } from "../../consts/classData";
 import { getSubject } from "../../api/subjectApi";
+import { BorderLeft } from "@material-ui/icons";
 
 const useClassStyles = makeStyles({
   card: {
     height: "60vh",
     width: "90%",
   },
+  emptyMsg: {
+    paddingTop: 200, 
+  }
 });
 
 const ClassCard = ({ classObj, studentList = [] }) => {
@@ -38,7 +42,9 @@ const ClassCard = ({ classObj, studentList = [] }) => {
               allowSearch={false}
             />
           ) : (
-            false
+            <Typography component="h5" variant="h5" className={classCardClasses.emptyMsg}>
+              לכיתה זו אין תלמידים רשומים
+            </Typography>
           )}
         </Grid>
       </Grid>

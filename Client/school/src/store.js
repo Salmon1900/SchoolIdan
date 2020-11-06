@@ -10,6 +10,7 @@ export const initialState = {
   },
   management: {
     schoolYear: String(new Date().getFullYear()),
+    selectedSchoolYear: String(new Date().getFullYear())
   },
 };
 

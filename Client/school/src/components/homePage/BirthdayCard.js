@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   makeStyles,
+  Grid,
 } from "@material-ui/core";
 import { Cake } from "@material-ui/icons";
 
@@ -49,12 +50,19 @@ const BirthdayCard = ({ employees, daysAhead }) => {
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Typography component="h5" variant="h5">
-          ימי הולדת קרובים
-          <Icon>
-            <Cake fontSize="large" />
-          </Icon>
-        </Typography>
+        <Grid container justify="space-around">
+          <Grid item>
+            <Typography component="h5" variant="h5">
+              ימי הולדת קרובים
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Icon>
+              <Cake fontSize="large" />
+            </Icon>
+          </Grid>
+        </Grid>
+
         <List>
           {employees ? employees
             .filter((emp) => checkIfBirthdayNear(emp.date_of_birth))
@@ -65,7 +73,7 @@ const BirthdayCard = ({ employees, daysAhead }) => {
                   secondary={formatBirthday(emp.date_of_birth)}
                 />
               </ListItem>
-            )): false}
+            )) : false}
         </List>
       </CardContent>
     </Card>

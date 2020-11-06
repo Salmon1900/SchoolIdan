@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 15,
   },
 }));
-const GradePanel = ({ id = "", title, loadGrades }) => {
+const GradePanel = ({ id = "", title, loadGrades, yearOfData }) => {
   const [grades, setGrades] = useState([]);
   const [devision, setDevision] = useState([25, 25, 25, 25]);
 
@@ -34,7 +34,7 @@ const GradePanel = ({ id = "", title, loadGrades }) => {
       setGrades(grades);
       loadDevision(grades);
     });
-  }, []);
+  }, [yearOfData]);
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>

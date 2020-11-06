@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ClassSummaryCard from "../../ItemCards/ClassSummaryCard";
 import { Grid } from "@material-ui/core";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { getEmployeeClasses } from "../../../api/employeeApi";
 import { getSubject } from "../../../api/subjectApi";
 import {
@@ -16,11 +16,14 @@ import EntityManager from "../../general/managementPanel/EntityManager";
 import EntityDialog from "../../general/managementPanel/EntityDialog";
 import { classItemActions } from "../../../consts/classData";
 import { getStudentAgeGroup } from "../../../api/studentApi";
+import SchoolYearSelector from "../SchoolYearSelector";
 
 const ClassManagementPage = ({ teacherId }) => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState({});
   const [selectedClassData, setSelectedClassData] = useState({});
+  const currentSchoolYear = useSelector(state => state.management.schoolYear);
+  const selectedSchoolYear = useSelector(state => state.management.selectedSchoolYear);
   //   const [classes, setClasses] = useState([]);
 
   const loadClasses = async () => {
@@ -102,6 +105,14 @@ const ClassManagementPage = ({ teacherId }) => {
   const classActionConditions = () => {
     let classStudents = selectedClassData["students"];
     let availableStudents = selectedClassData["availableStudents"];
+    
+    if(selectedClass.school_year !== currentSchoolYear){
+      return {
+        addStudent: false,
+        removeStudent: false,
+      };
+    }
+    
     if (classStudents && availableStudents) {
       return {
         addStudent: Boolean(availableStudents.length),
@@ -118,9 +129,12 @@ const ClassManagementPage = ({ teacherId }) => {
   return (
     <div>
       <Grid container spacing={2} justify="center">
+        <Grid item xs={12}>
+          <SchoolYearSelector />
+        </Grid>
         {classes.length ? (
           classes.map((classObj) => {
-            return (
+            return classObj.school_year === selectedSchoolYear ? (
               <Grid item xs={4} key={classObj.class_id}>
                 <ClassSummaryCard
                   classObj={classObj}
@@ -128,13 +142,13 @@ const ClassManagementPage = ({ teacherId }) => {
                   isSelected={Object.keys(selectedClass).length}
                 />
               </Grid>
-            );
+            ) : false;
           })
         ) : (
-          <Grid item xs={12}>
-            לא קיימות כיתות
-          </Grid>
-        )}
+            <Grid item xs={12}>
+              לא קיימות כיתות
+            </Grid>
+          )}
       </Grid>
 
       <EntityDialog

@@ -26,7 +26,7 @@ const GradingPage = ({ teacherId }) => {
   );
 
   const [gradeFormOpen, setGradeForm] = useState(false);
-  const [studentToGrade, setStudentToGrade] = useState("111222013");
+  const [studentToGrade, setStudentToGrade] = useState("");
   const [selectedClassStudents, setSelectedClassStudents] = useState([]);
   const [action, setAction] = useState({});
 

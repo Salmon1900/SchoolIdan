@@ -1,6 +1,7 @@
 import { Grid, makeStyles, IconButton } from '@material-ui/core';
 import React from 'react';
-import Logo from '../../res/placeholder.png'
+import Logo from '../../res/lion-logo-1.png'
+import HatLogo from '../../res/hat-icon.png'
 import { getAllSubjects } from '../../api/subjectApi'
 import { ExitToApp, Menu } from '@material-ui/icons';
 import { connect } from 'react-redux';
@@ -23,20 +24,23 @@ const Header = ({ isLoggedIn, openNavDrawer }) => {
             <Grid container>
                 <Grid item xs={1}>
                     {isLoggedIn ?
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="end"
-                        onClick={() => openNavDrawer(true)}
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="end"
+                            onClick={() => openNavDrawer(true)}
                         // className={clsx(open && classes.hide)}
-                    >
-                        <Menu />
-                    </IconButton> : false}
+                        >
+                            <Menu />
+                        </IconButton> : false}
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item xs={9}>
                 </Grid>
                 <Grid item xs={1}>
-                    <img src={Logo} className={headerClasses.logo} />
+                </Grid>
+                <Grid item xs={1}>
+                    <img src={HatLogo} className={headerClasses.logo} />
+                    {/* <img src={Logo} className={headerClasses.logo} /> */}
                 </Grid>
             </Grid>
         </header>

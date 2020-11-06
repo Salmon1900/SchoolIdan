@@ -13,9 +13,9 @@ module.exports = (app) => {
       });
   });
 
-  app.get("/exams/teacher/avg/:id", ensureAuthenticated, (req, res) => {
+  app.get("/exams/teacher/avg/:id/:year", ensureAuthenticated, (req, res) => {
     examService
-      .getTeachersStudentsAvrageGrade(req.params.id)
+      .getTeachersStudentsAvrageGrade(req.params.id, req.params.year)
       .then((data) => res.send(data));
   });
 
@@ -26,21 +26,21 @@ module.exports = (app) => {
   });
 
   app.get(
-    "/exams/teacher/subject/:teacherId/:subjectId",
+    "/exams/teacher/subject/:teacherId/:subjectId/:year",
     ensureAuthenticated,
     (req, res) => {
       examService
-        .getTeachersSubjectGrades(req.params.teacherId, req.params.subjectId)
+        .getTeachersSubjectGrades(req.params.teacherId, req.params.subjectId, req.params.year)
         .then((data) => res.send(data));
     }
   );
 
   app.get(
-    "/exams/teacher/age/:teacherId/:ageGroup",
+    "/exams/teacher/age/:teacherId/:ageGroup/:year",
     ensureAuthenticated,
     (req, res) => {
       examService
-        .getTeachersAgeGroupGrades(req.params.teacherId, req.params.ageGroup)
+        .getTeachersAgeGroupGrades(req.params.teacherId, req.params.ageGroup, req.params.year)
         .then((data) => res.send(data));
     }
   );

@@ -1,10 +1,11 @@
 Server: 
 [] - Fix file reading when no file sent - cant read 'buffer' of undefined - employeeController
 [] - Checkout socket IO
+[X] - Adapt exam quries to return grade for certain year
 [] - Update DB scripts
 [] - Clean and check DB before presentain
 
-Client: 
+Client:  
 [] - Fix scroller & MaterialTable flinching
 [] - Fix navbar height change when loggin in
 [] - Add new logo
@@ -12,17 +13,20 @@ Client:
 [] - Add loading spinner
     [] - Card loading student, teacher, classes
     [] - loading grades
-[] - Better handling for classes with no students - teacher page
+    [] - Pages loding - class management, grading page
+[X] - Better handling for classes with no students - teacher page
 [] - Add teacher pages to manager user
-[] - Add school year selection for relevant pages
-    [] - 
+[X] - Add school year selection for relevant pages
+    [X] - Class management - only show chosen school year classes + if chosen year isnt current all classes inactive
+    [X] - Grading page - when getting classes to grade get only classes for current school year (No selector)
+    [X] - Stats page - *ALL* grade data only from classes with chosen school year
 [] - Design student and teacher cards from management panels - teacher card jumps
 [] - Fix bug that makes you stay on login screen sometimes ***
 [] - Check for places with rerender and add loader
 [] - Add student to class
     [] - Change to auto complete?
     [] - Error - validation not working?
-[] - Pauses before potential out-of-memory crash
+[X?] - Pauses before potential out-of-memory crash
 [] - Add avrage grades table
 
 Extra design imporvements 
