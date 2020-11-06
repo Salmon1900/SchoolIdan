@@ -84,6 +84,7 @@ const activateClass = async (id) => {
   return querySchoolDB(qry.activateById, [id]);
 };
 
+// Not used by users only for development
 const deleteClass = async (id) => {
   let classRec = await getById(id);
   if (!classRec[0]) {
@@ -92,7 +93,7 @@ const deleteClass = async (id) => {
     throw failReason;
   }
 
-  // TODO: Delete exams of this class,
+  // Delete exams of this class,
   await querySchoolDB(qry.deleteListings, [id]);
   return querySchoolDB(qry.deleteById, [id]);
 };

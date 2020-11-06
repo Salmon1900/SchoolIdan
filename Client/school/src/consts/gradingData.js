@@ -60,21 +60,31 @@ export const gradeTableData = {
 };
 
 export const gradeStatSections = {
-  allAvg: "ממוצע ציוני התלמידים",
+  allAvg: {
+    title: "ממוצע ציוני התלמידים",
+    name: "ממוצעים",
+    color: "category1",
+  },
   bySubject: {
     title: "חלוקה לפי מקצוע",
+    name: "מקצוע",
     idProperty: "subject_id",
     nameProperty: "subject_name",
+    color: "category2",
   },
   byClass: {
     title: "חלוקה לפי כיתות",
+    name: "כיתה",
     idProperty: "class_id",
     nameProperty: "class_name",
+    color: "category3",
   },
   byAge: {
     title: "חלוקה לפני שנתון",
+    name: "גיל",
     idProperty: "student_birth_year",
     nameProperty: "student_birth_year",
+    color: "category4",
   },
 };
 

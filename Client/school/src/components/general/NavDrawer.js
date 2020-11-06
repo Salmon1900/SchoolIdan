@@ -34,10 +34,22 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: "flex-start",
   },
+  icon: {
+    borderLeft: `5px solid ${theme.palette.primary.main}`,
+    borderRadius: 50,
+    borderBottom: "inset",
+  },
+}));
+
+const useIconStyles = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.secondary.main,
+  },
 }));
 
 const NavDrawer = ({ isOpen, closeNavDrawer, role, logOutUser }) => {
   const classes = useStyles();
+  const iconClasses = useIconStyles();
   const history = useHistory();
 
   const moveToPage = (page) => {
@@ -73,6 +85,7 @@ const NavDrawer = ({ isOpen, closeNavDrawer, role, logOutUser }) => {
                 button
                 key={page.name}
                 onClick={(e) => moveToPage(page)}
+                className={classes.icon}
               >
                 <ListItemIcon>{page.icon}</ListItemIcon>
                 <ListItemText primary={page.name} />

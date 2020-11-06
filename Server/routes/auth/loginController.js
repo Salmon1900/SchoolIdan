@@ -1,17 +1,23 @@
-const { ensureAuthenticated } = require('../../auth/authentication');
-const loginService = require('../../services/auth/loginService');
-const {ROLES} = require('../../auth/roleCheck')
+const { ensureAuthenticated } = require("../../auth/authentication");
+const loginService = require("../../services/auth/loginService");
+const { ROLES } = require("../../auth/roleCheck");
 
-module.exports = (app, passport) => {
-    app.post('/login', passport.authenticate('local') ,(req, res) => {
-        res.json({success: req.isAuthenticated(), role: req.user.job_id})
-    })
+module.exports = (app, passport, io) => {
+  app.post("/login", passport.authenticate("local"), (req, res) => {
+    if (req.isAuthenticated() && req.body.attempt) {
+      io.sockets.emit("signIn", {
+        id: req.user.emp_id,
+        name: req.user.emp_name,
+      });
+    }
+    res.json({ success: req.isAuthenticated(), role: req.user.job_id });
+  });
 
-    app.get('/logout', (req, res) => {
-        req.logout();
-        res.json({success: true})
-    })
-}
+  app.get("/logout", (req, res) => {
+    req.logout();
+    res.json({ success: true });
+  });
+};
 
 // Old auth
 // module.exports = (app) => {

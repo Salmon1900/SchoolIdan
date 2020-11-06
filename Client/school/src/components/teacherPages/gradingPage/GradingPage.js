@@ -9,6 +9,7 @@ import FormDialog from "../../general/managementPanel/FormDialog";
 import SchoolManageForm from "../../general/managementPanel/SchoolManageForm";
 import { gradingActions } from "../../../consts/gradingData";
 import { addGradeToStudent } from "../../../api/gradingApi";
+import { alertFlag } from "../../../consts/reactAlert";
 
 // TODO:
 // Selector where you see teachers active classes relevant to this year
@@ -56,20 +57,27 @@ const GradingPage = ({ teacherId }) => {
       fieldData.examDate
     ).then((res) => {
       success = res.success;
-      alert(res.message);
+      alertFlag(res.message, res.success);
     });
 
     return success;
   };
 
   useEffect(() => {
-    loadClasses();
+    if (teacherId) {
+      loadClasses();
+    }
     setAction(gradingActions({ gradeStudent }).gradeStudent);
 
-    if (selectedClassId) {
+    if (selectedClassId && teacherId) {
       loadSelectedClassStudents();
     }
-  }, [selectedClassId]);
+  }, [selectedClassId, teacherId]);
+
+  useEffect(() => {
+    setSelectedClass("");
+    setSelectedClassStudents("");
+  }, [teacherId]);
 
   const loadSelectedClassStudents = async () => {
     await getClassStudents(selectedClassId).then((students) =>
@@ -90,7 +98,7 @@ const GradingPage = ({ teacherId }) => {
       )}
       {selectedClassStudents ? (
         <StudentGradingList
-          studentList={selectedClassStudents}
+          studentList={selectedClassId ? selectedClassStudents : []}
           handleGrading={handleGradeStudent}
         />
       ) : (

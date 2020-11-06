@@ -5,7 +5,7 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "SchoolDB",
+            "name": "School",
             "database": "School",
             "username": "postgres",
             "password": "admin"

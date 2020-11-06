@@ -6,11 +6,11 @@ import { ranges } from "../../../../consts/gradingData";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: (props) => `1px solid ${theme.palette[props.color]}`,
     margin: 15,
   },
 }));
-const GradePanel = ({ id = "", title, loadGrades, yearOfData }) => {
+const GradePanel = ({ id = "", title, loadGrades, type, color, yearOfData }) => {
   const [grades, setGrades] = useState([]);
   const [devision, setDevision] = useState([25, 25, 25, 25]);
 
@@ -34,12 +34,13 @@ const GradePanel = ({ id = "", title, loadGrades, yearOfData }) => {
       setGrades(grades);
       loadDevision(grades);
     });
-  }, [yearOfData]);
-  const classes = useStyles();
+  }, [id, yearOfData]);
+  const props = { color };
+  const classes = useStyles({ color: color });
   return (
     <Paper className={classes.paper}>
       <Typography component="h5" variant="h5">
-        {title}
+        {`ציוני ${type} - ${title}`}
       </Typography>
       <GradeTable grades={grades} />
       <GradePieChart grades={grades} devision={devision} />

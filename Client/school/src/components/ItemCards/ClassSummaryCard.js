@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   root: {
     // backgroundColor: isActive ? "white" : "grey",
     textAlign: "center",
-    width: "20vw",
+    // width: "20vw",
     margin: "3vw",
   },
   bullet: {

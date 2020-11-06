@@ -4,6 +4,7 @@ const studentService = require("./studentService");
 const classService = require("./classService");
 const { newExamValid } = require("./validation/examValidation");
 const labels = require("../utils/labels");
+const ErrorHandle = require("../utils/ErrorHandler");
 
 const addNewExamRec = async (exam) => {
   // validate Student exists

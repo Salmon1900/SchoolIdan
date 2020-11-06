@@ -4,6 +4,7 @@ import {
   deactiveSubject,
   getAllSubjects,
 } from "../../../../api/subjectApi";
+import { alertFlag, alertWarning } from "../../../../consts/reactAlert";
 import {
   subjectPanel,
   subjectTable,
@@ -25,7 +26,7 @@ const SubjectManagementSection = () => {
     let success;
     await addNewSubject(data.subjectName).then((res) => {
       success = res.success;
-      alert(res.message);
+      alertFlag(res.message, res.success);
     });
 
     return success;
@@ -35,15 +36,14 @@ const SubjectManagementSection = () => {
   const removeSubject = async (fieldData, selectData = {}) => {
     let success;
     // If data sent with dropdown use that else use normal data
-    console.log(fieldData);
     if (!selectData.subjects && !Object.keys(selectData).length) {
-      alert("אנא מלא את כל השדות");
+      alertWarning("אנא מלא את כל השדות");
       return false;
     }
     await deactiveSubject(
       Object.keys(selectData).length ? selectData.subjects : fieldData
     ).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
       success = res.success;
       if (res.success) {
         loadSubejcts();

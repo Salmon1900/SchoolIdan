@@ -27,6 +27,7 @@ import { getJobList } from "../../api/jobApi";
 import { addNewEmployee } from "../../api/employeeApi";
 import { getRules } from "./validationRules";
 import { useHistory } from "react-router";
+import { alertFlag } from "../../consts/reactAlert";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -110,7 +111,7 @@ const SignUpForm = ({ isManagment = false }) => {
         reset();
         history.push("/");
       }
-      alert(res.message);
+      alertFlag(res.message, res.success);
     });
   };
 

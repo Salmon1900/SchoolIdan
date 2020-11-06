@@ -7,15 +7,18 @@ import { ExitToApp, Menu } from '@material-ui/icons';
 import { connect } from 'react-redux';
 // import { IconButton } from 'material-ui';
 
-const headerStyles = makeStyles(theme => ({
-    header: {
-        backgroundColor: theme.palette.primary.main,
-        height: "7vh",
-        padding: 5
-    },
-    logo: {
-        height: "6vh",
-    }
+const headerStyles = makeStyles((theme) => ({
+  header: {
+    backgroundColor: theme.palette.primary.main,
+    height: "7vh",
+  },
+  logo: {
+    height: "6vh",
+  },
+  drawer: {
+    marginTop: "11px",
+    border: `1px solid ${theme.palette.secondary.main}`,
+  },
 }));
 const Header = ({ isLoggedIn, openNavDrawer }) => {
     const headerClasses = headerStyles();
@@ -48,9 +51,9 @@ const Header = ({ isLoggedIn, openNavDrawer }) => {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        isLoggedIn: state.user.loggedIn
-    }
-}
+  return {
+    isLoggedIn: state.user.loggedIn,
+  };
+};
 
 export default connect(mapStateToProps, null)(Header);

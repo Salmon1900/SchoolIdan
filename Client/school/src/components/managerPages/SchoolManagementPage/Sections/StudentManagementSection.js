@@ -21,6 +21,7 @@ import {
 import EntityManager from "../../../general/managementPanel/EntityManager";
 import StudentCard from "../../../ItemCards/StudentCard";
 import EntityDialog from "../../../general/managementPanel/EntityDialog";
+import { alertFlag, alertSuccess } from "../../../../consts/reactAlert";
 // import AddStudentForm from './AddStudentForm';
 
 const useButtonPanelStyles = makeStyles({
@@ -40,7 +41,7 @@ const StudentManagementSection = () => {
   const removeStudent = async (id) => {
     let success;
     await deleteStudentById(id).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
       success = res.success;
       if (res.success) {
         loadStudents();
@@ -65,7 +66,7 @@ const StudentManagementSection = () => {
 
     await addNewStudent(student).then((res) => {
       success = res.success;
-      alert(res.message);
+      alertFlag(res.message, res.success);
     });
 
     return success;
@@ -85,7 +86,8 @@ const StudentManagementSection = () => {
         title={studentPanel.title}
         data={students}
         reloadData={loadStudents}
-        tableData={{ ...studentTable, openDetails: openStudent }}
+        // tableData={{ ...studentTable, openDetails: openStudent }}
+        tableData={{ ...studentTable }}
         actionMap={{ add: false, remove: false }}
         actions={studentActions({ add: addStudent, remove: removeStudent })}
       />

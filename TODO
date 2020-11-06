@@ -1,5 +1,5 @@
 Server: 
-[] - Fix file reading when no file sent - cant read 'buffer' of undefined - employeeController
+[X] - Fix file reading when no file sent - cant read 'buffer' of undefined - employeeController
 [] - Checkout socket IO
 [X] - Adapt exam quries to return grade for certain year
 [] - Update DB scripts
@@ -7,10 +7,11 @@ Server:
 
 Client:  
 [] - Fix scroller & MaterialTable flinching
-[] - Fix navbar height change when loggin in
+[X] - Fix navbar height change when loggin in
 [] - Add new logo
-[] - Add custom alerts
+[X] - Add custom alerts
 [] - Add loading spinner
+    [X] - login
     [] - Card loading student, teacher, classes
     [] - loading grades
     [] - Pages loding - class management, grading page
@@ -21,24 +22,28 @@ Client:
     [X] - Grading page - when getting classes to grade get only classes for current school year (No selector)
     [X] - Stats page - *ALL* grade data only from classes with chosen school year
 [] - Design student and teacher cards from management panels - teacher card jumps
-[] - Fix bug that makes you stay on login screen sometimes ***
+[X] - Fix bug that makes you stay on login screen sometimes ***
 [] - Check for places with rerender and add loader
 [] - Add student to class
     [] - Change to auto complete?
-    [] - Error - validation not working?
+    [X] - Error - validation not working?
 [X] - Pauses before potential out-of-memory crash
-[] - Add avrage grades table
+[X] - Add avrage grades table
 
 Extra design imporvements 
 [] - home page - ask for ideas
     [] - Make birthday card nicer
-    [] - Make employee card more elegant consistent
-[] - stats page make everything even and more simple looking
-[] - grade input page
-    [] - Make selector smaller
+    [X] - Make employee card more elegant consistent
+[X] - stats page make everything even and more simple looking
+[X] - grade input page
+    [X] - Make selector smaller
 [] - Add decent logo
 
 Questions
-[] - When deactivating class/subejct - still show it/act like deleted
-[] - What does current school year affect (except for teacher class page, grading page)
-[] - When looking at subject/age/avg grades - include other school years?
+[X] - When deactivating class/subejct - still show it/act like deleted
+ - Class - show as inactive - subject show as deleted
+[X] - What does current school year affect (except for teacher class page, grading page)
+[X] - When looking at subject/age/avg grades - include other school years?
+[] - What to use socket io for
+[] - Why only one class per subject and age group for teacher
+[] - Do I show fired teacher in insepction page

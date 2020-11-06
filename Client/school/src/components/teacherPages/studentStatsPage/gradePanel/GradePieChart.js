@@ -27,10 +27,9 @@ const GradePieChart = ({ grades, devision = [40, 30, 20, 10] }) => {
     ],
   };
 
-  console.log("Test");
   return (
     <div className={classes.container}>
-      <Pie data={data} redraw />
+      <Pie data={data} />
     </div>
   );
 };

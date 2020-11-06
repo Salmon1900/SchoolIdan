@@ -1,5 +1,5 @@
 export const staffPanel = {
-  title: "רשימת רשימת",
+  title: "ניהול מורי בית הספר",
 };
 
 export const staffTable = {

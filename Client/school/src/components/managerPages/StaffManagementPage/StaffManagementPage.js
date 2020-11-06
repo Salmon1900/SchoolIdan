@@ -24,6 +24,7 @@ import TeacherCard from "../../ItemCards/TeacherCard";
 import { connect } from "react-redux";
 import { createNewClass, deactivateClass } from "../../../api/classApi";
 import { BlockOutlined } from "@material-ui/icons";
+import { alertFlag, alertWarning } from "../../../consts/reactAlert";
 
 const StaffManagementPage = ({ schoolYear }) => {
   const [teachers, setTeachers] = useState([]);
@@ -44,7 +45,7 @@ const StaffManagementPage = ({ schoolYear }) => {
     let success;
     await addNewEmployee(newEmp).then((res) => {
       success = res.success;
-      alert(res.message);
+      alertFlag(res.message, res.success);
     });
 
     return success;
@@ -53,7 +54,7 @@ const StaffManagementPage = ({ schoolYear }) => {
   const fireTeacher = async (id) => {
     let success;
     await fireTeacherById(id).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
       success = res.success;
       if (res.success) {
         loadTeachers();
@@ -66,14 +67,15 @@ const StaffManagementPage = ({ schoolYear }) => {
   const addQualif = async (fieldData, selectData = {}) => {
     let success;
     if (!selectData.availableSubjects) {
-      alert("אנא בחר מקצוע להוספה");
+      alertWarning("אנא בחר מקצוע להוספה");
       return false;
     }
     await addQualificationToEmp(
       selectedTeacher.emp_id,
       selectData.availableSubjects
     ).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
+
       success = res.success;
       if (res.success) {
         loadSelectedTeacherData();
@@ -86,14 +88,15 @@ const StaffManagementPage = ({ schoolYear }) => {
   const removeQualif = async (fieldData, selectData = {}) => {
     let success;
     if (!selectData.qualifications) {
-      alert("אנא בחר מקצוע להסרה");
+      alertWarning("אנא בחר מקצוע להסרה");
       return false;
     }
     await removeEmpQualification(
       selectedTeacher.emp_id,
       selectData.qualifications
     ).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
+
       success = res.success;
       if (res.success) {
         loadSelectedTeacherData();
@@ -106,7 +109,7 @@ const StaffManagementPage = ({ schoolYear }) => {
   const assignClass = async (fieldData, selectData = {}) => {
     let success;
     if (!selectData.qualifications) {
-      alert("אנא מלא את כל השדות");
+      alertWarning("אנא מלא את כל השדות");
       return false;
     }
     await createNewClass({
@@ -116,7 +119,8 @@ const StaffManagementPage = ({ schoolYear }) => {
       birthYear: fieldData.birthYear,
       schoolYear: schoolYear,
     }).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
+
       success = res.success;
       if (res.success) {
         loadSelectedTeacherData();
@@ -129,12 +133,12 @@ const StaffManagementPage = ({ schoolYear }) => {
   const deassignClass = async (fieldData, selectData = {}) => {
     let success;
     if (!selectData.toughtClasses) {
-      alert("אנא בחר כיתה");
+      alertWarning("אנא בחר כיתה");
       return false;
     }
 
     await deactivateClass(selectData.toughtClasses).then((res) => {
-      alert(res.message);
+      alertFlag(res.message, res.success);
       success = res.success;
       if (res.success) {
         loadSelectedTeacherData();

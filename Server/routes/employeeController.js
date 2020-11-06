@@ -6,7 +6,7 @@ var multer = require("multer");
 const { emp } = require("../utils/labels");
 var upload = multer({ dest: process.env.FILE_PATH });
 
-module.exports = (app) => {
+module.exports = (app, io) => {
   app.get("/employees", ensureAuthenticated, (req, res) => {
     empService.getEmployeeList().then((data) => {
       res.send(data);
@@ -19,10 +19,14 @@ module.exports = (app) => {
     });
   });
 
-  app.post("/employees/new", multer().single("profile"), (req, res) => {
-    empService
+  app.post("/employees/new", multer().single("profile"), async (req, res) => {
+    await empService
       .createNewEmployee(req.body, req.file ? req.file.buffer : null)
       .then((data) => {
+        io.sockets.emit("newEmp", {
+          ...req.body,
+          encode: req.file ? req.file.buffer : null,
+        });
         res.status(201).json({ success: true, message: "נוסף בהצלחה" });
       })
       .catch((err) => {
