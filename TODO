@@ -47,3 +47,25 @@ Questions
 [] - What to use socket io for
 [] - Why only one class per subject and age group for teacher
 [] - Do I show fired teacher in insepction page
+[] - Manager chnages socket-io
+
+Presenation notes:
+
+DB:
+[] - Clean from trash data
+[] - Add data in previous years
+
+
+Client:
+[] - Change system font
+[] - Remove management panel shadow and imporve design
+[] - Make year selector outlined
+[] - Replaces material table with normal table - check if still things get stuck
+
+Socket-io:
+[] - Multiple alerts when signing in from same Client
+[] - Update employee list - Home 
+[] - Update Grade data - StudentStatsPage/GradePanel - Ask machlev
+[] - Add Remove classes - Classmangement page
+[] - Add Remove Students from classe s- Classmangement page
+[] - Ask about manager chnages
